@@ -1,0 +1,158 @@
+<div>
+  <mat-sidenav-container class="kl-sidenav-container">
+    <mat-sidenav #sidenav [opened]="false" [mode]="'over'" [fixedInViewport]="isLessThenLargeDevice">
+      <div class="rounded-md border overflow-hidden w-72">
+        <div class="user text-center bg-primary py-10 px-5">
+          <img class="ml-auto mr-auto" src="assets/images/avatar.png" alt="abraham lincoln" />
+          <h4 class="text-base mt-3" style="color: #00000070">Abraham Lincoln</h4>
+        </div>
+        <mat-nav-list class="_sidenav">
+        
+          <a
+            mat-list-item
+            routerLink="/dashboard/profile"
+            routerLinkActive="bg-gray-200"
+            class="font-semibold text-gray-500 hover:text-primary"
+            ><mat-icon class="mr-2">account_circle</mat-icon> View my profile</a
+          >
+          <a
+            mat-list-item
+            routerLink="/dashboard/saved-items"
+            routerLinkActive="bg-gray-200"
+            class="font-semibold text-gray-500 hover:text-primary"
+            ><mat-icon class="mr-2">list</mat-icon> Saved Items</a
+          >
+          <a
+            mat-list-item
+            routerLink="/dashboard/orders"
+            routerLinkActive="bg-gray-200"
+            class="font-semibold text-gray-500 hover:text-primary"
+            ><mat-icon class="mr-2">article</mat-icon> Orders</a
+          >
+          <a (click)="onLogout()" mat-list-item class="font-semibold text-gray-500 hover:text-primary"><mat-icon class="mr-2">logout</mat-icon> Logout</a>
+        </mat-nav-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <header class="ll_header bg-gray-50 shadow">
+        <div class="container">
+          <div class="flex items-center">
+            <div class="flex items-center">
+              <a class="logo" [routerLink]="['']"><img style="width: 45%;" src="assets/images/logo.png" alt="Logo" /></a>
+            </div>
+            <button
+              *ngIf="isLessThenLargeDevice"
+              (click)="sidenav.toggle()"
+              class="_sidenav__toggler ml-3 ms-sm-3"
+              mat-icon-button
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
+            <div class="items-center flex ml-auto">
+              <button mat-icon-button>
+                <mat-icon>notifications</mat-icon>
+              </button>
+              <button mat-icon-button>
+                <mat-icon>account_circle</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <div>
+        <div class="container-dashboard" style="margin-left: 0px !; margin-top: 0px !;">
+          <div class="grid grid-cols-12 gap-8">
+            <div 
+              class="col-span-3 hidden xl:block" 
+              [ngStyle]="{'width': isExpanded === true ? '250px' : '70px' }"
+              style="    
+                height: 100%;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                background-color: #FFFF;
+                padding-top: 20px;"
+              >
+              <div class="py-5 min-h-screen">
+                <div class="rounded-md overflow-hidden h-full">
+                  <!-- <div class="user text-center bg-primary py-10 px-5">
+                    <img class="ml-auto mr-auto" src="assets/images/avatar.png" alt="abraham lincoln" />
+                    <h4 class="text-white mt-3" style="color: #00000070">Abraham Lincoln</h4>
+                  </div> -->
+                  <mat-nav-list class="_sidenav">
+                    
+                    <a
+                      mat-list-item
+                      routerLink="/dashboard/profile"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">account_circle</mat-icon> <span *ngIf="isExpanded" >My Profile</span></a
+                    >
+                    <a
+                    
+                      mat-list-item
+                      routerLink="/dashboard/my-orders"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon  class="mr-2">article</mat-icon><span *ngIf="isExpanded" >My Orders</span></a
+                    >
+                    <a (click)="onLogout()" mat-list-item class="font-semibold text-gray-500 hover:text-primary">
+                      <mat-icon class="mr-2">logout</mat-icon> <span *ngIf="isExpanded">Logout</span></a>
+                    <div style="border-bottom: 1px solid #F5F5F5;"></div>
+                    <h6 *ngIf="isExpanded" class="text-center py-3" style="font-weight: 500; color: #00000070;">Admin Panel</h6>
+                      <a
+                        mat-list-item
+                        routerLink="/dashboard"
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        routerLinkActive="bg-gray-200"
+                        class="font-semibold text-gray-500 hover:text-primary"
+                        ><mat-icon class="mr-2">dashboard</mat-icon> <span *ngIf="isExpanded" >Dashboard</span></a
+                      >
+                      <a
+                      mat-list-item
+                      routerLink="/dashboard/product"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">article</mat-icon> <span *ngIf="isExpanded">Products</span></a>
+                      <a
+                      mat-list-item
+                      routerLink="/dashboard/inventory"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">list</mat-icon><span *ngIf="isExpanded" >Inventory</span></a>
+                      <a
+                      mat-list-item
+                      routerLink="/dashboard/orders"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">shopping_cart</mat-icon> <span *ngIf="isExpanded" >Orders</span></a>
+                      <a
+                      mat-list-item
+                      routerLink="/dashboard/users"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">group</mat-icon> <span *ngIf="isExpanded" >Users</span></a>
+                      <a
+                      mat-list-item
+                      routerLink="/dashboard/store-address"
+                      routerLinkActive="bg-gray-200"
+                      class="font-semibold text-gray-500 hover:text-primary"
+                      ><mat-icon class="mr-2">store</mat-icon><span *ngIf="isExpanded" >Store Address</span></a>
+                  </mat-nav-list>
+
+                  <div class="text-center mt-20">
+                    <a (click)="changeSidebar()" clickable><mat-icon style="transform: scale(2);">keyboard_arrow_right</mat-icon></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 xl:col-span-9 py-10">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

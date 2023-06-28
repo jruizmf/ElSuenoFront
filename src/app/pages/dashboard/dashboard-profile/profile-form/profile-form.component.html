@@ -1,0 +1,91 @@
+
+            
+
+<div>
+	<!-- User Start -->
+    <form  (ngSubmit)="saveDetails(form)" autocomplete="off">
+        <h3 style="color: #00000070; font-weight: 500;">Edit profile</h3>
+        <div class="flex flex-wrap">
+            <div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2" style="background-color: rgb(222, 222, 222); ">
+                <div class="w-16 h-16 rounded-full overflow-hidden shadow-md">
+                    <img src="assets/images/user-128x128.jpg" alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="" style="color: #00000070;">
+                    <h5>Abraham Lincoln</h5>
+                    <p class="leading-normal ">
+                        <span class="font-medium">Email</span>: example@mail.com</p>
+                </div>
+            </div>
+            <div class="w-full sm:w-1/2 sm:pl-5 mt-5 mmd:t-0">
+                <p class="mt-1">
+                    <strong>Username</strong>: Jruizmf</p>
+                <p>
+                    <strong>Member Since</strong>: 10 May 2020</p>
+                <p class="mt-1">
+                    <strong>Organization</strong>: Tech Incent</p>
+                    <p class="mt-1">
+                        <strong>Role</strong>: Admin</p>
+            </div>
+        </div>
+        <!-- User End -->
+        <!-- User Meta Start -->
+        <div class="border bg-white mt-8 rounded-md">
+            <div class="flex p-4 bg-gray-200">
+                <h6 class="text-normal">Primary Information</h6>
+            </div>
+            <div class="flex flex-wrap p-4">
+                <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                    <div class="ll-dataset">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Firstname:</mat-label>
+                            <input matInput type="telephone" formControlName="telephone" placeholder="Your Telephone">
+                            <mat-icon matSuffix>people</mat-icon>
+                            <mat-hint>Input your name</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['telephone'].errors?.['required']">Firstname is required</mat-error>
+                            <mat-error *ngIf="form.controls['telephone'].errors?.['pattern']">Please enter valid telephone</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="ll-dataset mt-4">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Lastname:</mat-label>
+                            <input matInput type="lastname" formControlName="lastname" placeholder="Your lastname">
+                            <mat-icon matSuffix>people</mat-icon>
+                            <mat-hint>Input your name</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['lastname'].errors?.['required']">Lastname is required</mat-error>
+                            <mat-error *ngIf="form.controls['lastname'].errors?.['pattern']">Please enter valid lastname</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="w-full sm:w-1/2">
+                    <div class="ll-dataset">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Address:</mat-label>
+                            <input matInput type="address" formControlName="address" placeholder="Your address">
+                            <mat-icon matSuffix>mail_outline</mat-icon>
+                            <mat-hint>Input the fully qualified email address</mat-hint>
+                             <!-- <mat-error *ngIf="form.controls['address'].errors?.['required']">Address is required</mat-error>
+                            <mat-error *ngIf="form.controls['address'].errors?.['pattern']">Please enter valid address</mat-error>  -->
+                        </mat-form-field>
+                    </div>
+                    <div class="ll-dataset mt-4">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Telephone:</mat-label>
+                            <input matInput type="telephone" formControlName="telephone" placeholder="Your Telephone">
+                            <mat-icon matSuffix>telephone_outline</mat-icon>
+                            <mat-hint>Input your telephone number</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['email'].errors?.['required']">Telephone is required</mat-error>
+                            <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid telephone</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- User Meta End -->
+        <!-- User Meta Start -->
+        <div class="p-5" style="text-align: end;">
+            <button mat-raised-button color="info" type="submit" style="color: rgb(4, 255, 75); border: 1px solid rgb(4, 255, 75); background-color: #FFFFFF;" [disabled]="!form.valid">Save changes </button>
+        </div>
+	<!-- User Meta End -->
+    </form>
+</div>

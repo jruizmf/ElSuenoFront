@@ -1,0 +1,106 @@
+<!-- ============== SECTION PAGETOP ============== -->
+<section class="mt-10 py-20">
+   
+    <div class="container">
+    
+    <!-- =================== COMPONENT CART+SUMMARY ====================== -->
+        <div class="grid grid-cols-12 gap-4 lg:gap-8">
+            <div class="col-span-10 md:col-span-8 p-4">
+                <mat-card class="p-6" >
+                    <h4 class="card-title mb-4">Your shopping cart</h4>
+                    <mat-card-content >
+                        <div class="grid grid-cols-12 gap-4 lg:gap-8 gy-3 mb-4">
+                            <div class="col-span-5 md:col-span-5"><span>Product</span></div>
+                            <div class="col-span-2 md:col-span-2"><span>Quantity</span></div>
+                            <div class="col-span-2 md:col-span-2"><span>Price</span></div>
+                            <div class="col-span-3 md:col-span-3"><span>Remove</span></div>
+                        </div>
+                        
+                        <article class="grid grid-cols-12 gap-4 lg:gap-8 gy-3 mb-4">
+                            <div class="col-span-5 md:col-span-5">
+                                <figure class="itemside me-lg-5">
+                                    <div class="aside"><img width="120px" src="./../../../assets/images/products/01-1.png" class="img-sm img-thumbnail"></div>
+                                    <figcaption class="info">
+                                        <a href="#" class="title">Mens T-shirt Cotton Base</a>
+                                        <p class="text-muted"> Blue, Medium </p>
+                                    </figcaption>
+                                </figure>
+                            </div>
+                            <div class="col-span-2 md:col-span-2">
+                                <select style="width: 100px; border-bottom: 1px solid #00000070;" class="form-select" >
+                                    <option>1</option>
+                                    <option>2</option>  
+                                    <option>3</option>  
+                                    <option selected>4</option>  
+                                </select> 
+                            </div>
+                            <div class="col-span-2 md:col-span-2">
+                                <div class="price-wrap lh-sm"> 
+                                    <var class="price h6">$44.80</var>  <br>
+                                    <small class="text-muted"> $12.20 / per item </small> 
+                                </div> <!-- price-wrap .// -->
+                            </div>
+                            <div class="col-span-3 md:col-span-3">
+                                <div class="pl-5">
+                                    <a href="#" class="btn btn-light"> <i class="fa fa-heart"></i></a> 
+                                    <a href="#" class="btn btn-light text-danger" style="color: red;"> <mat-icon color="danger">remove_circle_outline</mat-icon></a>
+                                </div>
+                            </div>
+                        </article> <!-- row.// -->
+    
+                    </mat-card-content>
+	
+                </mat-card><!-- card.// -->
+    
+            </div> <!-- col.// -->
+            <mat-card class="col-span-2 md:col-span-4 p-4" >
+                <mat-card-content >
+                    <!-- <form>
+                        <div class="form-group">
+                            <label class="form-label">Have coupon?</label>
+                            <div class="input-group">
+                            <input type="text" class="form-control" name="" placeholder="Coupon code">
+                            <button class="btn btn-light">Apply</button>
+                            </div>
+                        </div>
+                    </form> -->
+                
+                    <div class="card">
+                        <div class="card-body">
+                            <dl class="dlist-align">
+                                <dt>Total price:</dt>
+                                <dd class="text-end"> $329.00</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>Discount:</dt>
+                                <dd class="text-end text-success"> - $60.00 </dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>TAX:</dt>
+                                <dd class="text-end"> $14.00 </dd>
+                            </dl>
+                            <hr>
+                            <dl class="dlist-align">
+                                <dt>Total:</dt>
+                                <dd class="text-end text-dark h5"> $357.90 </dd>
+                            </dl>
+                            
+                            <div class="d-grid gap-2 my-3">
+                                <a href="#" class="btn btn-success w-100"> Make Purchase </a>
+                                <a href="#" class="btn btn-light w-100"> Back to shop </a>
+                            </div>
+                        </div>
+                    </div> <!-- card-body.// -->
+                </mat-card-content>
+	
+            </mat-card><!-- col.// -->
+        
+        </div> <!-- row.// -->
+    <!-- =================== COMPONENT 1 CART+SUMMARY .//END  ====================== -->
+    
+    <br><br>
+    
+    </div> <!-- container .//  -->
+</section>
+    
+    
