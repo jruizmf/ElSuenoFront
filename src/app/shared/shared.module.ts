@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { HttpClientModule } from '@angular/common/http';
+import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
 import { MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -23,10 +23,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
+import { MAT_SELECT_SCROLL_STRATEGY_PROVIDER, MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MAT_AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY_PROVIDER, MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -36,26 +36,32 @@ const commonModules = [
         MatToolbarModule,
         MatIconModule,
         MatButtonModule,
+        MatSelectModule,
         MatTableModule,
-        MatAutocompleteModule,
         MatSortModule,
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatSelectModule,
         MatRadioModule,
         MatMenuModule,
         MatCardModule,
         MatProgressSpinnerModule,
         MatSidenavModule,
         MatTooltipModule,
-        MatListModule
+        MatRadioModule,
+        MatListModule,
+        MatAutocompleteModule, 
+        MatDialogModule
 ];
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent],
   imports: [CommonModule, RouterModule, ...commonModules],
-  exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, ...commonModules]
+  exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, ...commonModules],
+  providers: [
+    MAT_AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY_PROVIDER,
+  MAT_SELECT_SCROLL_STRATEGY_PROVIDER,
+]
 })
 export class SharedModule {}

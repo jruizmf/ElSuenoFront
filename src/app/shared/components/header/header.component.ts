@@ -15,20 +15,24 @@ export class HeaderComponent implements OnInit {
   isScrolled: boolean = false;
   isLoggeded: boolean = false;
   menuList: any[] = [];
+  displayList:boolean = false;
   isLessThenLargeDevice: boolean | undefined;
   constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {}
 
   ngOnInit(): void {
     this.menuList = staticMenuList;
-    this.isLoggeded = this.auth.isAuthenticated();
-    console.log(this.isLoggeded )
+    this.isLoggeded = this.auth.isAuthenticated()
     this.breakpointObserver.observe(['(max-width: 1199px)']).subscribe(({ matches }) => {
       this.isLessThenLargeDevice = matches;
     });
   }
 
   @HostListener('window:scroll', ['$event'])
-  checkScroll() {
+  checkScroll():void {
     this.isScrolled = window.pageYOffset > 15;
+  }
+
+  logout():void{
+    this.auth.logout();
   }
 }

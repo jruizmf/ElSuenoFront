@@ -19,17 +19,34 @@
       </button>
       <div class="hidden items-center md:flex ml-auto">
         <div *ngIf="isLoggeded" class="mx-10 cart">
-          <a routerLink="cart">
+          <a [routerLink]="['/cart']">
             <span class="count">1</span>
-          <!--   <span class="count">1</span> -->
           <span class="material-icons">shopping_cart</span>
           </a>
-          
-        
         </div>
         
-       <a *ngIf="isLoggeded"  [routerLink]="['/auth/login']" mat-raised-button style="background-color:#280590; color: #FFFFFF;" class="text-lg font-bold py-2 px-5"><span class="material-icons">menu</span> Menu</a>
-       <a *ngIf="!isLoggeded" [routerLink]="['/auth/login']" mat-raised-button class="text-lg font-bold py-2 px-5">Login</a>
+        <button mat-button *ngIf="isLoggeded" style="background-color:#280590; color: #FFFFFF;" class="text-lg font-bold py-2 px-5" (click)="displayList = !displayList">
+          <span class="material-icons">menu</span> Menu
+        </button>
+        <div *ngIf="displayList" id="cdk-overlay-0" class="cdk-overlay-pane" style="    position: absolute;
+            bottom: -80%;
+    right: 0.5%;">
+          <div tabindex="-1" role="menu" class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open mat-mdc-elevation-specific ng-trigger ng-trigger-transformMenu ng-tns-c1398213682-10 mat-menu-after mat-menu-below mat-elevation-z8 ng-star-inserted" id="mat-menu-panel-2" style="transform-origin: left top; 
+          height: 120px;
+          width: 140px;">
+            <div class="mat-mdc-menu-content mdc-list ng-tns-c1398213682-10">
+              <a [routerLink]="['/dashboard']" mat-menu-item="" class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item ng-tns-c1398213682-10 px-5 py-2" role="menuitem" tabindex="0" aria-disabled="false" style="padding: 0.8rem 1.8rem; width: 100%;">
+                <span class="mdc-list-item__primary-text">Dashboard</span>
+                <div matripple="" class="mat-ripple mat-mdc-menu-ripple"></div><!---->
+              </a>
+              <button mat-menu-item="" (click)="logout()" class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item ng-tns-c1398213682-10 px-5 py-2" role="menuitem" tabindex="0" aria-disabled="false" style="padding: 0.8rem 1.8rem; width: 100%;">
+                <span class="mdc-list-item__primary-text">Logout</span>
+                <div matripple="" class="mat-ripple mat-mdc-menu-ripple"></div><!---->
+              </button>
+            </div>
+          </div>
+        </div>
+        <a *ngIf="!isLoggeded" [routerLink]="['/auth/login']" mat-raised-button class="text-lg font-bold py-2 px-5">Login</a>
         <a *ngIf="!isLoggeded" [routerLink]="['/auth/signup']" mat-raised-button style="background-color:#E60B7B; color: #FFFFFF;"  class="text-lg font-bold py-2 px-5 ml-2">Join Now</a>
       </div>
     </div>

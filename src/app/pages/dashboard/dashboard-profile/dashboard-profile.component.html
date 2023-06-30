@@ -1,21 +1,19 @@
 <div>
 	<!-- User Start -->
 	<div class="flex flex-wrap">
-		<div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2">
+		<div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2" style="color: #00000070 !important; ">
 			<div class="w-16 h-16 rounded-full overflow-hidden shadow-md">
-				<img src="assets/images/user-128x128.jpg" alt="" class="w-full h-full object-cover">
+				<img [src]="user.avatar ? user.avatar : 'assets/images/user-128x128.jpg'" alt="" class="w-full h-full object-cover">
 			</div>
-			<div class="text-white">
-				<h5>Abraham Lincoln</h5>
-				<p class="leading-normal text-white">
-					<span class="font-medium">Email</span>: example@mail.com</p>
+			<div>
+				<h5>{{ user.fullName}}</h5>
+				<p class="leading-normal">
+					<span class="font-medium">Email</span>: {{ user.email}}</p>
 			</div>
 		</div>
 		<div class="w-full sm:w-1/2 sm:pl-5 mt-5 mmd:t-0">
 			<p>
-				<strong>Member Since</strong>: 10 May 2020</p>
-			<p class="mt-1">
-				<strong>Organization</strong>: Tech Incent</p>
+				<strong>Member Since</strong>: {{ user.createdAt | date }}</p>
 		</div>
 	</div>
 	<!-- User End -->
@@ -23,7 +21,7 @@
 	<div class="border bg-white mt-8 rounded-md">
 		<div class="flex p-4 bg-gray-200">
 			<h6 class="text-normal">Primary Information</h6>
-			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" routerLink="save">
+			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" routerLink="edit">
 				<mat-icon class="_edit_icon mr-2">edit</mat-icon>
 				Edit</a>
 		</div>
@@ -31,10 +29,10 @@
 			<div class="w-full sm:w-1/2">
 				<div class="ll-dataset">
 					<div class="ll-dataset__label">
-						Email:
+						Roles:
 					</div>
-					<div class="ll-dataset__value">
-						example@mail.com
+					<div class="ll-dataset__value" *ngFor="let item of user.roles">
+						<span>{{ item | titlecase }}</span>
 					</div>
 				</div>
 				<div class="ll-dataset mt-4">
@@ -42,27 +40,12 @@
 						Number:
 					</div>
 					<div class="ll-dataset__value">
-						+880-12121-212123
+						{{ user.phoneNumber }}
 					</div>
 				</div>
 			</div>
 			<div class="w-full sm:w-1/2 mt-4 sm:mt-0">
-				<div class="ll-dataset">
-					<div class="ll-dataset__label">
-						Username:
-					</div>
-					<div class="ll-dataset__value">
-						abraham_lincoln
-					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Business Role:
-					</div>
-					<div class="ll-dataset__value">
-						Buyer
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -70,81 +53,77 @@
 	<!-- User Meta Start -->
 	<div class="border bg-white mt-8 rounded-md">
 		<div class="flex p-4 bg-gray-200">
-			<h6 class="text-normal">Personal Information</h6>
+			<h6 class="text-normal">Shipping address</h6>
 			<button class="text-blue-400 hover:text-accent ml-auto flex items-center">
 				<mat-icon class="_edit_icon mr-2">edit</mat-icon>
 				Edit</button>
 		</div>
-		<div class="flex flex-wrap p-4">
-			<div class="w-full sm:w-1/2">
-				<div class="ll-dataset">
-					<div class="ll-dataset__label">
-						First Name:
+		<div *ngIf="user.address != null">
+			<div class="flex flex-wrap p-4"  *ngFor="let item of user.address" >
+				<div class="w-full sm:w-1/2">
+					<div class="ll-dataset">
+						<div class="ll-dataset__label">
+							First Name:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.firstName }}
+						</div>
 					</div>
-					<div class="ll-dataset__value">
-						Abraham
+					<div class="ll-dataset mt-4">
+						<div class="ll-dataset__label">
+							Last Name:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.lastName }}
+						</div>
 					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Last Name:
+					<div class="ll-dataset mt-4">
+						<div class="ll-dataset__label">
+							Address:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.address }}
+						</div>
 					</div>
-					<div class="ll-dataset__value">
-						Lincoln
-					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Gender:
-					</div>
-					<div class="ll-dataset__value">
-						Male
-					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Date of Birth:
-					</div>
-					<div class="ll-dataset__value">
-						07 Febuery 1995
-					</div>
-				</div>
-			</div>
-			<div class="w-full sm:w-1/2 mt-4 sm:mt-0">
-				<div class="ll-dataset">
-					<div class="ll-dataset__label">
-						Contact Number:
-					</div>
-					<div class="ll-dataset__value">
-						+880-12121-212123
+					<div class="ll-dataset mt-4">
+						<div class="ll-dataset__label">
+							ZIP Code:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.zip }}
+						</div>
 					</div>
 				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Organization:
+				<div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+					<div class="ll-dataset">
+						<div class="ll-dataset__label">
+							Contact Number:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.phone }}
+						</div>
 					</div>
-					<div class="ll-dataset__value">
-						Tech Incent
+					<div class="ll-dataset mt-4">
+						<div class="ll-dataset__label">
+							City:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.city }}
+						</div>
 					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Occupation:
+					<div class="ll-dataset mt-4">
+						<div class="ll-dataset__label">
+							State:
+						</div>
+						<div class="ll-dataset__value">
+							{{ item.state }}
+						</div>
 					</div>
-					<div class="ll-dataset__value">
-						Full Stack Developer
-					</div>
-				</div>
-				<div class="ll-dataset mt-4">
-					<div class="ll-dataset__label">
-						Others:
-					</div>
-					<div class="ll-dataset__value">
-						N/A
-					</div>
+					
 				</div>
 			</div>
 		</div>
+		
 	</div>
 	<!-- User Meta End -->
 </div>

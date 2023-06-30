@@ -33,24 +33,20 @@ export class SignupComponent implements OnInit {
 
   submit():void {
     this.submitted = true;
-    console.log(this.signupForm.valid)
-    console.log(this.validatePassword())
     if (!this.signupForm.valid || !this.validatePassword()) {
       return;
     }
-    let user : IUser = {
+
+    this._auth.register({
       fullName: this.f.fullName.value,
       email: this.f.email.value,
       password: this.f.password.value
-    }
-
-    this._auth.register(user).subscribe( res => {
+    }).subscribe( res => {
       console.log(res)
       this.signupForm.disable();
 
       this.router.navigate(['auth/login']);
-    })
-    
+    })    
   }
 
   validatePassword():boolean{

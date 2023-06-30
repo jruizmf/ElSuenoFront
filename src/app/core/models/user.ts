@@ -1,3 +1,4 @@
+import { IAddress } from "./address";
 
 export interface IUser {
   _id?: string | null;
@@ -6,8 +7,10 @@ export interface IUser {
   password?: string | null;
   roles?: string[] | ['client'];
   isActive?: boolean | true;
-  addresses?: any[] | null | undefined;
-
+  address?: IAddress[] | null | undefined;
+  phoneNumber?: string | null;
+  banner?: string | null;
+  avatar?: string | null;
   // TODO: agregar createdAt y updatedAt
   createdAt?: string;
 }

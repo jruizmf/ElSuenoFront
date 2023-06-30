@@ -49,12 +49,30 @@
               <mat-icon>menu</mat-icon>
             </button>
             <div class="items-center flex ml-auto">
-              <button mat-icon-button>
+              <!-- <button mat-icon-button>
                 <mat-icon>notifications</mat-icon>
-              </button>
-              <button mat-icon-button>
+              </button> -->
+              <button mat-icon-button (click)="displayList = !displayList">
                 <mat-icon>account_circle</mat-icon>
               </button>
+              <div *ngIf="displayList" id="cdk-overlay-0" class="cdk-overlay-pane" style=" position: absolute;
+              bottom: 78%;
+              right: 0.5%;">
+                <div tabindex="-1" role="menu" class="mat-mdc-menu-panel mdc-menu-surface mdc-menu-surface--open mat-mdc-elevation-specific ng-trigger ng-trigger-transformMenu ng-tns-c1398213682-10 mat-menu-after mat-menu-below mat-elevation-z8 ng-star-inserted" id="mat-menu-panel-2" style="transform-origin: left top; 
+                height: 120px;
+                width: 140px;">
+                  <div class="mat-mdc-menu-content mdc-list ng-tns-c1398213682-10">
+                    <a [routerLink]="['/dashboard']" mat-menu-item="" class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item ng-tns-c1398213682-10 px-5 py-2" role="menuitem" tabindex="0" aria-disabled="false" style="padding: 0.8rem 1.8rem; width: 100%;">
+                      <span class="mdc-list-item__primary-text">Dashboard</span>
+                      <div matripple="" class="mat-ripple mat-mdc-menu-ripple"></div><!---->
+                    </a>
+                    <button mat-menu-item="" (click)="onLogout()" class="mat-mdc-menu-item mat-mdc-focus-indicator mdc-list-item ng-tns-c1398213682-10 px-5 py-2" role="menuitem" tabindex="0" aria-disabled="false" style="padding: 0.8rem 1.8rem; width: 100%;">
+                      <span class="mdc-list-item__primary-text">Logout</span>
+                      <div matripple="" class="mat-ripple mat-mdc-menu-ripple"></div><!---->
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

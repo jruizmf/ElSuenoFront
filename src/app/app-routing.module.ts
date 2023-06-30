@@ -40,7 +40,11 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
+    canActivate: [AuthGuardService],
+    data: { 
+      isDashboard: false
+    }
   },
   {
     path: 'doc',
@@ -49,7 +53,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuardService],
-    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('./pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+    data: { 
+      isDashboard: true
+    }
   },{ 
     path: '**', 
     component: ErrorPageComponent 
