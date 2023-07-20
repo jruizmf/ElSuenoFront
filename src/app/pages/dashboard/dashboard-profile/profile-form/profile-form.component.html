@@ -1,11 +1,11 @@
 <div>
 	<!-- User Start -->
-    <form  (ngSubmit)="saveDetails(form)" autocomplete="off">
+    <form [formGroup]="form" (ngSubmit)="saveDetails(form)" autocomplete="off">
         <h3 style="color: #00000070; font-weight: 500;">Edit profile</h3>
         <div class="flex flex-wrap">
             <div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2" style="background-color: rgb(222, 222, 222); ">
                 <div class="w-16 h-16 rounded-full overflow-hidden shadow-md">
-                    <img [src]="user.avatar ? user.avatar : 'assets/images/user-128x128.jpg'" alt="" class="w-full h-full object-cover">
+                    <img [src]="user.avatar ? user.avatar : 'assets/images/user-128x128.jpg'" alt="avatar" class="w-full h-full object-cover">
                 </div>
                 <div class="" style="color: #00000070;">
                     <h5>{{ user.fullName}}</h5>
@@ -39,7 +39,7 @@
                     <div class="ll-dataset mt-4">
                         <mat-form-field style="width: 80%;">
                             <mat-label>Telephone:</mat-label>
-                            <input matInput type="phoneNumber" formControlName="phoneNumber" placeholder="Your Phone number">
+                            <input matInput type="text" formControlName="phoneNumber" placeholder="Your Phone number">
                             <mat-icon matSuffix>people</mat-icon>
                             <mat-hint>Input your name</mat-hint>
                             <!-- <mat-error *ngIf="form.controls['lastname'].errors?.['required']">Lastname is required</mat-error>
@@ -49,21 +49,7 @@
                 </div>
                 <div class="w-full sm:w-1/2">
                      <div class="ll-dataset">
-                        <mat-form-field style="width: 80%;">
-                            <mat-label>Avatar:</mat-label>
-                            <input type="file" class="file-input"
-                                (change)="onFileSelected($event)" #fileUpload>
-
-                            <div class="file-upload">
-
-                            {{fileName || "No file uploaded yet."}}
-
-                                <button mat-mini-fab color="primary" class="upload-btn"
-                                (click)="fileUpload.click()">
-                                    <mat-icon>attach_file</mat-icon>
-                                </button>
-                            </div>
-                        </mat-form-field>
+                        <app-uploader></app-uploader>
                     </div>
                     <!--<div class="ll-dataset mt-4">
                         <mat-form-field style="width: 80%;">

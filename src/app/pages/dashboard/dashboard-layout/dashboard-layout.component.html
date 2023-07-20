@@ -82,7 +82,7 @@
         <div class="container-dashboard" style="margin-left: 0px !; margin-top: 0px !;">
           <div class="grid grid-cols-12 gap-8">
             <div 
-              class="col-span-3 hidden xl:block" 
+              class="col-span-2 hidden xl:block" 
               [ngStyle]="{'width': isExpanded === true ? '250px' : '70px' }"
               style="    
                 height: 100%;
@@ -141,13 +141,13 @@
                       ><mat-icon class="mr-2">list</mat-icon><span *ngIf="isExpanded" >Inventory</span></a>
                       <a
                       mat-list-item
-                      routerLink="/dashboard/orders"
+                      routerLink="/dashboard/order"
                       routerLinkActive="bg-gray-200"
                       class="font-semibold text-gray-500 hover:text-primary"
                       ><mat-icon class="mr-2">shopping_cart</mat-icon> <span *ngIf="isExpanded" >Orders</span></a>
                       <a
                       mat-list-item
-                      routerLink="/dashboard/users"
+                      routerLink="/dashboard/user"
                       routerLinkActive="bg-gray-200"
                       class="font-semibold text-gray-500 hover:text-primary"
                       ><mat-icon class="mr-2">group</mat-icon> <span *ngIf="isExpanded" >Users</span></a>
@@ -165,7 +165,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-span-12 xl:col-span-9 py-10">
+            <div class="col-span-12 xl:col-span-10 py-10 px-10">
               <router-outlet></router-outlet>
             </div>
           </div>

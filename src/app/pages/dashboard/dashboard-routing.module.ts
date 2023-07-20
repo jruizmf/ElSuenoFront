@@ -5,11 +5,9 @@ import { DashboardLayoutComponent } from './dashboard-layout/dashboard-layout.co
 import { DashboardOrderComponent } from './dashboard-order/dashboard-order.component';
 import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardSavedItemComponent } from './dashboard-saved-item/dashboard-saved-item.component';
-import { ProfileFormComponent } from './dashboard-profile/profile-form/profile-form.component';
-import { ProductComponent } from './product/product.component';
-import { InventoryComponent } from './inventory/inventory.component';
-import { UserComponent } from './user/user.component';
-import { StoreAddressComponent } from './store-address/store-address.component';
+import { InventoryComponent } from './dashboard-inventory/inventory.component';
+import { UserComponent } from './dashboard-user/user.component';
+import { StoreAddressComponent } from './dashboard-store-address/store-address.component';
 
 
 
@@ -21,7 +19,7 @@ const DashboardChildrenRoute: Routes = [
   },
   {
     path: 'product',
-    loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
+    loadChildren: () => import('./dashboard-product/dashboard-product.module').then(m => m.DashboardProductModule)
   },
   {
     path: 'inventory',
@@ -44,7 +42,7 @@ const DashboardChildrenRoute: Routes = [
     loadChildren: () => import('./dashboard-profile/dashboard-profile.module').then(m => m.DashboardProfileModule)
   },
   {
-    path: 'orders',
+    path: 'order',
     component: DashboardOrderComponent
   }
 ];

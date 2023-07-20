@@ -9,10 +9,6 @@ import { Router } from '@angular/router';
 
 const AUTH_API = 'http://localhost:3000/api/auth/';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
 @Injectable({
   providedIn: 'root',
 })
@@ -27,9 +23,6 @@ export class AuthService {
   login(auth: Auth): Observable<any> {
     return this.http.post<Auth>(`${AUTH_API}login`,  auth )
             .pipe(map(async (u: any) => {
-              console.log(u)
-                localStorage.setItem('user', JSON.stringify(u.user));
-                localStorage.setItem('token', JSON.stringify(u.token))
                 this.userSubject.next(u);
                 return u;
             }));
@@ -38,7 +31,6 @@ export class AuthService {
   register(user: IUser): Observable<any> {
     return this.http.post<IUser>(`${AUTH_API}register`, user)
             .pipe(map(async (u) => {
-                console.log(u)
                 localStorage.setItem('user', JSON.stringify(u));
                 this.userSubject.next(u);
                 return user;

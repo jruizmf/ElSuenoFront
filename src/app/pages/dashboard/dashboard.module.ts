@@ -10,8 +10,9 @@ import { SharedModule } from '../../shared/shared.module';
 import { DashboardSavedItemComponent } from './dashboard-saved-item/dashboard-saved-item.component';
 import { DashboardProfileComponent } from './dashboard-profile/dashboard-profile.component';
 import { DashboardOrderComponent } from './dashboard-order/dashboard-order.component';
-import { InventoryComponent } from './inventory/inventory.component';
-import { UserComponent } from './user/user.component';
+import { InventoryComponent } from './dashboard-inventory/inventory.component';
+import { UserComponent } from './dashboard-user/user.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,6 @@ import { UserComponent } from './user/user.component';
     InventoryComponent,
     UserComponent
   ],
-  imports: [CommonModule, DashboardRoutingModule, SharedModule, MatMenuModule]
+  imports: [CommonModule, SweetAlert2Module.forChild({ /* options */ }), DashboardRoutingModule, SharedModule, MatMenuModule]
 })
 export class DashboardModule {}

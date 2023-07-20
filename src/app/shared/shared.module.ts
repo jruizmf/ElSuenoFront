@@ -23,12 +23,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MAT_SELECT_SCROLL_STRATEGY_PROVIDER, MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import {MAT_AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY_PROVIDER, MatAutocompleteModule} from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ProgressComponent } from './components/progress/progress.component';
+import { DndDirective } from '../helpers/directives/dnd.directive';
+import { UploaderComponent } from './components/uploader/uploader.component';
+import {MatChipsModule} from '@angular/material/chips';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import {MatStepperModule} from '@angular/material/stepper';
 
 const commonModules = [
         FormsModule,
@@ -39,6 +45,7 @@ const commonModules = [
         MatSelectModule,
         MatTableModule,
         MatSortModule,
+        
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
@@ -52,13 +59,17 @@ const commonModules = [
         MatRadioModule,
         MatListModule,
         MatAutocompleteModule, 
-        MatDialogModule
+        MatSlideToggleModule,
+        MatDialogModule,
+        MatChipsModule,
+        MatStepperModule,
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent],
-  imports: [CommonModule, RouterModule, ...commonModules],
-  exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, ...commonModules],
+  declarations: [HeaderComponent, DndDirective, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent, UploaderComponent, ProgressComponent],
+  imports: [CommonModule,
+    SweetAlert2Module.forRoot(), RouterModule, ...commonModules],
+  exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, UploaderComponent, ...commonModules],
   providers: [
     MAT_AUTOCOMPLETE_SCROLL_STRATEGY_FACTORY_PROVIDER,
   MAT_SELECT_SCROLL_STRATEGY_PROVIDER,

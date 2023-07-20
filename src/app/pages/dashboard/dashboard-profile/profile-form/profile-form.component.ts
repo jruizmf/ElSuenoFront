@@ -22,13 +22,9 @@ export class ProfileFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      name: [null, [Validators.required, Validators.minLength(10)]],
-      email: [null, [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-      dob: [null, [Validators.required]],
-      address: [null],
-      country: [null],
-      gender: [null]
+     this.form = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(10)]],
+      phoneNumber: [null, [Validators.required, Validators.minLength(10)]]
     });
   }
   uploadFileEvt(imgFile: any) {

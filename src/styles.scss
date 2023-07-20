@@ -59,3 +59,13 @@ body {
     height: 400px !important;
   }
 }
+.mat-horizontal-content-container {
+  overflow: initial;
+  padding: 0 24px 24px 24px;
+}
+
+.mat-horizontal-stepper-wrapper.ng-tns-c3788376409-5.ng-star-inserted {
+  overflow: scroll;
+  width: fit-content !important;
+  max-height: 100vh;
+}

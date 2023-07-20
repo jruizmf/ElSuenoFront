@@ -1,0 +1,131 @@
+<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button> -->
+  <mat-stepper [linear]="isLinear" #stepper  style="overflow: scroll;
+  width: fit-content !important;
+  max-height: 100vh;">
+    <form >
+        <mat-step >
+            <ng-template matStepLabel>Fill Product Attributes - Prices:</ng-template>
+            <div >
+                <div style="padding: 1rem 0; text-align: end;">
+                    <button type="button" mat-button (click)="addPrice()" style="color: #18bc02; border: 1px solid #18bc02;"><mat-icon>add</mat-icon>Add Price</button>
+                </div>
+                <div *ngFor="let price of attributes.prices; let i=index" >
+                    <div style=" text-align: end;">
+                        <button (click)="removePrice(i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                    </div>
+                    <h5 style="color: #00000070;">Price {{i + 1}}</h5>
+                    <div class="flex flex-wrap p-4">
+                        <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Name</mat-label>
+                                <input matInput id="{{i}}" placeholder="Size title" [(ngModel)]="attributes.prices[i].sizeTitle" name="sizeTitle_{{i}}" required>
+                            </mat-form-field>
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Client Price</mat-label>
+                                <input matInput id="{{i}}" placeholder="Client Price" [(ngModel)]="attributes.prices[i].clientPrice" name="clientPrice_{{i}}" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Frequent Price</mat-label>
+                                <input matInput id="{{i}}" placeholder="Frequent Price" [(ngModel)]="attributes.prices[i].frequentPrice" name="frequentPrice_{{i}}" required>
+                            </mat-form-field>
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Federal Price</mat-label>
+                                <input matInput id="{{i}}" placeholder="Federal" [(ngModel)]="attributes.prices[i].federalPrice" name="federalPrice_{{i}}" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div style="padding: 1rem 0; text-align: end;">
+                        <button type="button" mat-button (click)="addPriceSize(i)" style="color: #18bc02; border: 1px solid #18bc02;"><mat-icon>add</mat-icon> Add Size</button>
+                    </div>
+                    <div *ngFor="let price of attributes.prices[i].sizes; let _i=index" >
+                        <div style=" text-align: end;">
+                            <button (click)="removePriceSize(i, _i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                        </div>
+                        <h6 style="color: #00000070;">Size {{_i + 1}}</h6>
+                        <div class="flex flex-wrap p-4">
+                            <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            
+                                <mat-form-field style="width: 85%;">
+                                    <mat-label>Size Type</mat-label>
+                                    <input matInput id="{{i}}_{{_i}}" placeholder="Size Type" [(ngModel)]="attributes.prices[i].sizes[_i].sizeType" name="sizeType_{{i}}_{{i}}" required>
+                                </mat-form-field>
+                                <mat-form-field style="width: 85%;">
+                                    <mat-label>Size Value</mat-label>
+                                    <input matInput id="{{i}}_{{_i}}" placeholder="Size Value" [(ngModel)]="attributes.prices[i].sizes[_i].sizeValue" name="sizeValue_{{i}}_{{_i}}" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                                <mat-form-field style="width: 85%;">
+                                    <mat-label>Size Unit</mat-label>
+                                    <input matInput id="{{i}}_{{_i}}" placeholder="Size Unit" [(ngModel)]="attributes.prices[i].sizes[_i].sizeUnit" name="sizeUnit_{{i}}_{{_i}}" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+                
+                <div>
+                    <button mat-button style="color: #1B9AC5; border: 1px solid #1B9AC5;" matStepperNext>Next <mat-icon>keyboard_arrow_right</mat-icon></button>
+                    <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+                </div>
+            </div>
+        </mat-step>
+        <mat-step  label="Fill Product Attributes - Sales for Order">
+            <div >
+                <div style="padding: 1rem 0; text-align: end;">
+                    <button type="button" mat-button (click)="addSaleForOrder()" style="color: #18bc02; border: 1px solid #18bc02;"><mat-icon>add</mat-icon> Add</button>
+                </div>
+                <div *ngFor="let item of attributes.salesForOrder; let i=index">
+                    <div style=" text-align: end;">
+                        <button (click)="removeSaleForOrder(i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                    </div>
+                    <h5 style="color: #00000070;">Sale for order {{i + 1}}</h5>
+                    <div class="flex flex-wrap p-4">
+                        <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Weight</mat-label>
+                                <input matInput id="{{i}}" placeholder="Weight" [(ngModel)]="attributes.salesForOrder[i].weight" name="weight_{{i}}" required>
+                            </mat-form-field>
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Unit sale</mat-label>
+                                <input matInput id="{{i}}" placeholder="Unit sale" [(ngModel)]="attributes.salesForOrder[i].unitSale" name="unitSale_{{i}}" required>
+                            </mat-form-field>
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Client Increment</mat-label>
+                                <input matInput id="{{i}}" placeholder="Client Increment" [(ngModel)]="attributes.salesForOrder[i].decrementClient" name="decrementClient_{{i}}" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Frequent Increment</mat-label>
+                                <input matInput id="{{i}}" placeholder="Frequent Increment" [(ngModel)]="attributes.salesForOrder[i].decrementFrequent" name="decrementFrequent_{{i}}" required>
+                            </mat-form-field>
+                            <mat-form-field style="width: 85%;">
+                                <mat-label>Federal Increment</mat-label>
+                                <input matInput id="{{i}}" placeholder="Federal Increment" [(ngModel)]="attributes.salesForOrder[i].decrementFederal" name="decrementFederal_{{i}}" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <button mat-button style="color: #E60B7B; border: 1px solid #E60B7B;" matStepperPrevious>Back</button>
+                <button mat-button style="color: #1B9AC5; border: 1px solid #1B9AC5;" matStepperNext>Next</button>
+                <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+            </div>
+        </mat-step>
+        <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious style="color: #E60B7B; border: 1px solid #E60B7B;" >Back</button>
+            
+            <button mat-button color="primary"(click)="stepper.reset()">Reset</button>
+            <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+            <button mat-button color="accent" (click)="submit()">Finish</button>
+        </div>
+        </mat-step>
+    </form>
+  </mat-stepper>

@@ -1,0 +1,79 @@
+<div>
+    <div class="filter flex items-center mb-5">
+      <h5>Users</h5>
+      <div class="flex items-center ml-auto">
+        
+        <!-- <button [class.text-accent]="view === 'grid'" (click)="view = 'grid'" mat-icon-button class="view__btn"><mat-icon>grid_view</mat-icon></button>
+        <button [class.text-accent]="view === 'list'" (click)="view = 'list'" mat-icon-button class="view__btn"><mat-icon>list_alt</mat-icon></button>
+          -->
+        <a
+          routerLink="save" mat-icon-button class="more-button" aria-label="Toggle menu" style="color: #18bc02;"
+          matTooltip="Add new User"
+          aria-label="Add new User"
+        >
+          <mat-icon>add</mat-icon>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div *ngIf="view === 'list'" class="table-inside">
+        <div class="flex flex-col border ltLg:responsive" style="background-color: #FFFFFF;">
+          <div class="flex items-center p-4 border-b hover:bg-blue-100">
+            <div class="w-4/12 font-medium"><div class="pl-16 ml-3">User</div></div>
+            <div class="w-2/12 font-medium">Email</div>
+            <div class="w-2/12 font-medium text-center">Status</div>
+            <div class="w-2/12 font-medium">Telephone</div>
+            <div class="w-3/12 font-medium">Role</div>
+            <div class="w-1/12"></div>
+          </div>
+          <div class="flex items-center p-4 border-b hover:bg-blue-100" *ngFor="let user of users | slice: 0:9">
+            <div class="w-4/12">
+              <a href="" class="flex hover:text-primary">
+                <div class="max-h-16 w-16 flex-none mr-3 border" >
+                  <img [src]="user.avatar ? user.avatar : 'assets/images/user-128x128.jpg'" alt="img">
+                </div>
+                <h6 class="flex-auto">{{ user?.fullName }}</h6>
+              </a>
+            </div>
+            <div class="w-2/12">{{user?.email}}</div>
+            <div class="w-2/12 text-center">${{user?.isActive}}</div>
+            <div class="w-2/12 text-center">${{user?.phoneNumber}}</div>
+            <div class="w-3/12">
+              <div class="flex items-center" *ngFor="let item of user?.roles">
+                
+                {{item}}
+              </div>
+            </div>
+            <div class="w-1/12 text-right">
+              <button class="action_icon__btn" mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xposition="before">
+                <button mat-menu-item>
+                  <mat-icon>address</mat-icon>
+                  <span>View Addresses</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>dialpad</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+                <swal
+                  #deleteSwal
+                  title="Delete {{ user.fullName }}?"
+                  text="This cannot be undone"
+                  icon="question"
+                  [showCancelButton]="true"
+                  [focusCancel]="true"
+                  (confirm)="deleteUser(user, user?._id)">
+              </swal>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
