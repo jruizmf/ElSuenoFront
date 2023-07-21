@@ -8,7 +8,7 @@ import { AuthGuardService } from './shared/guards/auth.guard';
 import { RoleGuardService } from './shared/guards/role.guard';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { HttpRequestInterceptor } from './core/interceptors/http.interceptor';
+import { httpInterceptorProviders } from './core/interceptors/http.interceptor';
 import { HttpResponseInterceptor } from './core/interceptors/http-response.interceptor';
 
 @NgModule({
@@ -27,7 +27,7 @@ import { HttpResponseInterceptor } from './core/interceptors/http-response.inter
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, 
     AuthGuardService, 
     RoleGuardService,
-    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi:true},
+    httpInterceptorProviders,
     {provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]

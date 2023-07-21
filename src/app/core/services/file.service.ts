@@ -16,13 +16,12 @@ export class FileService {
     
   }
 
-  upload(file: File): Observable<any> {
+  upload(file: File): any{
     let formData:FormData = new FormData();
-    formData.append('file_upload', file, file.name);
-    return this.http.post<any>(`${FILE_API}upload`,  formData )
-            .pipe(map(async (res: any) => {
+    formData.append('file', file, file.name);
+    return this.http.post(`${FILE_API}upload`,  formData, {responseType: 'text'} ).toPromise().then( (res: any) => {
                 return res;
-            }));
+            });
   }
 
   delete(url: string): Observable<any> {

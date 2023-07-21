@@ -16,10 +16,7 @@ export const menuList: Menu[] = [
     path: '/products',
     name: 'Press'
   },
-  // {
-  //   path: '/about',
-  //   name: 'About'
-  // },
+ 
   // {
   //   path: '/contact',
   //   name: 'Contact'

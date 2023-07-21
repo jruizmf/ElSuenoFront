@@ -11,7 +11,7 @@ import { ProductAttributeStepperComponent } from 'src/app/shared/components/prod
 import { FileService } from 'src/app/core/services/file.service';
 import { ProductsService } from 'src/app/core/services/products.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-product-form',
@@ -23,37 +23,66 @@ export class DashboardProductFormComponent {
   form: FormGroup = new FormGroup({});
   attributeForm: FormGroup = new FormGroup({});
   errors:any[]= [];
-  product: IProduct;
+  product: IProduct = {
+    productName: "",
+    description: "",
+    needDocumentOfPrint:false,
+    needFieldsToOrder: false,
+    needOptionsCompose: false,
+    images:[],
+    tags:[],
+    composeOptions: null,
+    attributes: []
+  };
   fileName: string = "";
   fileAttr = 'Choose File';
   addOnBlur = true;
   hasAttributesAdded:boolean = false
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  tags: any[] = [];
-  composeOptions: any[] = []
-  composeOption: any = ""
-  productAttributes: any[] = []
+  composeOptions: any[] = [];
+  composeOption: any = "";
   images: any[] = [];
   announcer = inject(LiveAnnouncer);
   priceForm: FormGroup = new FormGroup({});
   salesForOrderForm: FormGroup = new FormGroup({});
+  productID: any;
+
+  isEditing: boolean;
 
   constructor(private fb: FormBuilder, private _composeOptionService: ComposeOptionService, public dialog: MatDialog,
-     private _productService: ProductsService, private _uploadService: FileService, private router: Router) { 
-     this.product = this.form.value as IProduct;
+     private _productService: ProductsService, private _uploadService: FileService, private router: Router, private route:ActivatedRoute) { 
+      this.form = this.fb.group({
+        productName: ["", [Validators.required, Validators.minLength(4)]],
+        description: ["", [Validators.required, Validators.minLength(4)]],
+        needOptionsCompose:[false],
+        needFieldsToOrder:[false],
+        composeOption: [""],
+        attributes: this.fb.array([])
+      });
+      this.productID = this.route.snapshot.paramMap.get('term')
+      if (this.productID == null) {
+        this.isEditing = false
+        this.product = this.form.value as IProduct;
+      } else{
+        this.isEditing = true;
+        this._productService.findByTerm(this.productID).then((product:any) => {
+          this.product = product.product as IProduct;
+
+          let needOptionsCompose= this.product.composeOptions != null
+     
+          this.form.controls['productName'].patchValue(this.product.productName);
+          this.form.controls['description'].patchValue(this.product.description);
+          this.form.controls['needOptionsCompose'].patchValue(this.product.needOptionsCompose);
+          this.form.controls['needFieldsToOrder'].patchValue(false);
+          this.form.controls['composeOption'].patchValue("");
+        });
+      }
+     
   }
 
   ngOnInit(): void {
     this.getComposeOptions();
-    this.form = this.fb.group({
-      productName: [null, [Validators.required, Validators.minLength(4)]],
-      description: [null, [Validators.required, Validators.minLength(4)]],
-      needOptionsCompose:[false],
-      needFieldsToOrder:[false],
-      composeOption: [null],
-      attributes: this.fb.array([])
-    });
-
+    
     this.attributeForm = this.fb.group({
       prices: this.fb.array([]),
       salesForOrderPermit: this.fb.array([]),
@@ -71,8 +100,6 @@ export class DashboardProductFormComponent {
   }
 
   submit(form: FormGroup) {
-    console.log("Submiting")
-    console.log(form)
     if (form.invalid) {
       Swal.fire('There are unfilled fields...', 'Please check the form!', 'error')
       return;
@@ -83,48 +110,59 @@ export class DashboardProductFormComponent {
       return;
     }
     let product: IProduct = this.getProduct();
-
-    this._productService.save(product).subscribe( res => {
-        console.log(res)
-        this.form.disable();
-        this.router.navigate(['dashboard']);
-      }, error => {
-        console.log(error)
-        Swal.fire('Something was wrong..', 'Please contact with technical support!', 'error')
+    setTimeout(()=>{   
+   
+      if (this.isEditing) {
+        this._productService.update(product).subscribe( res => {
+          this.form.disable();
+          this.router.navigate(['dashboard/product']);
+          }, error => {
+            Swal.fire('Something was wrong..', 'Please contact with technical support!', 'error')
+          }
+        )
+      } else{
+        this._productService.save(product).subscribe( res => {
+          this.form.disable();
+          this.router.navigate(['dashboard/product']);
+          }, error => {
+            Swal.fire('Something was wrong..', 'Please contact with technical support!', 'error')
+          }
+        )
       }
-    )
+    
+    }, 5000);   
   }
 
   getProduct():IProduct{
     let images: any[] = [];
-    console.log("Uploading")
-    console.log(this.images)
     if(this.images.length > 0){
-      this.images.forEach((image: any) =>{
-        this._uploadService.upload(image).subscribe((res: any) => {
-          images.push(res)
+      
+      for (let i = 0; i < this.images.length; i++) {
+        this._uploadService.upload(this.images[i]).then((res: any) => {
+          images[i] = res;
         })
-      })
+      }
     }
-    console.log(images)
     this.product = {
       productName: this.form.value.productName,
-      description: this.form.value.productName,
+      description: this.form.value.description,
       images: images,
-      attributes: this.productAttributes,
-      productComposeOptions: this.composeOptions.find(x => x._id == this.composeOption),
-      tags: this.tags
+      needDocumentOfPrint: false,
+      needFieldsToOrder: this.form.value.needFieldsToOrder,
+      needOptionsCompose: this.form.value.needOptionsCompose,
+      attributes: this.product.attributes,
+      composeOptions: { composeOption: this.composeOption, increment: 0},
+      tags: this.product.tags
     }
     return this.product;
   }
-
 
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our fruit
     if (value) {
-      this.tags.push(value);
+      this.product.tags.push(value);
     }
 
     // Clear the input value
@@ -132,10 +170,10 @@ export class DashboardProductFormComponent {
   }
 
   remove(tag: any): void {
-    const index = this.tags.indexOf(tag);
+    const index = this.product.tags.indexOf(tag);
 
     if (index >= 0) {
-      this.tags.splice(index, 1);
+      this.product.tags.splice(index, 1);
 
       this.announcer.announce(`Removed ${tag}`);
     }
@@ -151,19 +189,19 @@ export class DashboardProductFormComponent {
     }
 
     // Edit existing fruit
-    const index = this.tags.indexOf(tag);
+    const index = this.product.tags.indexOf(tag);
     if (index >= 0) {
-      this.tags[index].name = value;
+      this.product.tags[index] = value;
     }
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(ProductAttributeStepperComponent, {
-      data: this.productAttributes
+      data: this.product.attributes
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (typeof result != 'undefined') {
-        this.productAttributes = result;
+        this.product.attributes = result;
         this.hasAttributesAdded = true;
       }
     });

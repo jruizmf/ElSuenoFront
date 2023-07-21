@@ -79,7 +79,7 @@
                 <div style="padding: 1rem 0; text-align: end;">
                     <button type="button" mat-button (click)="addSaleForOrder()" style="color: #18bc02; border: 1px solid #18bc02;"><mat-icon>add</mat-icon> Add</button>
                 </div>
-                <div *ngFor="let item of attributes.salesForOrder; let i=index">
+                <div *ngFor="let item of attributes.salesForOrderPermit; let i=index">
                     <div style=" text-align: end;">
                         <button (click)="removeSaleForOrder(i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
                     </div>
@@ -88,25 +88,25 @@
                         <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
                             <mat-form-field style="width: 85%;">
                                 <mat-label>Weight</mat-label>
-                                <input matInput id="{{i}}" placeholder="Weight" [(ngModel)]="attributes.salesForOrder[i].weight" name="weight_{{i}}" required>
+                                <input matInput id="{{i}}" placeholder="Weight" [(ngModel)]="attributes.salesForOrderPermit[i].weight" name="weight_{{i}}" required>
                             </mat-form-field>
                             <mat-form-field style="width: 85%;">
                                 <mat-label>Unit sale</mat-label>
-                                <input matInput id="{{i}}" placeholder="Unit sale" [(ngModel)]="attributes.salesForOrder[i].unitSale" name="unitSale_{{i}}" required>
+                                <input matInput id="{{i}}" placeholder="Unit sale" [(ngModel)]="attributes.salesForOrderPermit[i].unitSale" name="unitSale_{{i}}" required>
                             </mat-form-field>
                             <mat-form-field style="width: 85%;">
                                 <mat-label>Client Increment</mat-label>
-                                <input matInput id="{{i}}" placeholder="Client Increment" [(ngModel)]="attributes.salesForOrder[i].decrementClient" name="decrementClient_{{i}}" required>
+                                <input matInput id="{{i}}" placeholder="Client Increment" [(ngModel)]="attributes.salesForOrderPermit[i].decrementClient" name="decrementClient_{{i}}" required>
                             </mat-form-field>
                         </div>
                         <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
                             <mat-form-field style="width: 85%;">
                                 <mat-label>Frequent Increment</mat-label>
-                                <input matInput id="{{i}}" placeholder="Frequent Increment" [(ngModel)]="attributes.salesForOrder[i].decrementFrequent" name="decrementFrequent_{{i}}" required>
+                                <input matInput id="{{i}}" placeholder="Frequent Increment" [(ngModel)]="attributes.salesForOrderPermit[i].decrementFrequent" name="decrementFrequent_{{i}}" required>
                             </mat-form-field>
                             <mat-form-field style="width: 85%;">
                                 <mat-label>Federal Increment</mat-label>
-                                <input matInput id="{{i}}" placeholder="Federal Increment" [(ngModel)]="attributes.salesForOrder[i].decrementFederal" name="decrementFederal_{{i}}" required>
+                                <input matInput id="{{i}}" placeholder="Federal Increment" [(ngModel)]="attributes.salesForOrderPermit[i].decrementFederal" name="decrementFederal_{{i}}" required>
                             </mat-form-field>
                         </div>
                     </div>

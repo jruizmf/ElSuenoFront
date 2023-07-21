@@ -11,7 +11,7 @@ export interface Size{
 
 export interface Attributes {
   prices: Price[];
-  salesForOrder: SalesForOrder[];
+  salesForOrderPermit: SalesForOrder[];
 }
 
 export interface Price {
@@ -43,7 +43,7 @@ export class ProductAttributeStepperComponent {
 
     this.attributes = {
       prices: [],
-      salesForOrder : []
+      salesForOrderPermit : []
     }
     this.addPrice();
     this.addSaleForOrder();
@@ -83,10 +83,10 @@ export class ProductAttributeStepperComponent {
   }
 
   addSaleForOrder() {
-    this.attributes.salesForOrder.push(this.newSaleForOrder());
+    this.attributes.salesForOrderPermit.push(this.newSaleForOrder());
   }
   removeSaleForOrder(i:number) {
-    delete this.attributes.salesForOrder[i];
+    delete this.attributes.salesForOrderPermit[i];
   }
 
   addPriceSize(i:number) {

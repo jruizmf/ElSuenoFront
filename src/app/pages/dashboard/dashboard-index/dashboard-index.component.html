@@ -7,9 +7,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{orderCounters.total}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">Total orders</a>
+						<a class="card-link" [routerLink]="'/dashboard/order'">Total orders</a>
 					</div>
 				</div>
 			</div>
@@ -23,9 +23,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{orderCounters.onGoing}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link"  [routerLink]="'/dashboard/saved-items'">On going orders</a>
+						<a class="card-link"  [routerLink]="'/dashboard/order'">On going orders</a>
 					</div>
 				</div>
 			</div>
@@ -39,9 +39,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{orderCounters.completed}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">Completed Orders</a>
+						<a class="card-link" [routerLink]="'/dashboard/order'">Completed Orders</a>
 					</div>
 				</div>
 			</div>
@@ -55,9 +55,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{orderCounters.noPaid}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">No Paid orders</a>
+						<a class="card-link" [routerLink]="'/dashboard/order'">No Paid orders</a>
 					</div>
 				</div>
 			</div>
@@ -71,9 +71,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{productCounters.inStock}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link"  [routerLink]="'/dashboard/saved-items'">Total Products</a>
+						<a class="card-link"  [routerLink]="'/dashboard/product'">Total Products</a>
 					</div>
 				</div>
 			</div>
@@ -87,15 +87,15 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{productCounters.inStock}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">Products In stock</a>
+						<a class="card-link" [routerLink]="'/dashboard/product'">Products In stock</a>
 					</div>
 				</div>
 			</div>
 		</mat-card-content>
 	</mat-card>
-	<mat-card class="col-span-6 md:col-span-4 border rounded p-4" style="max-height: 200px;">
+	<!-- <mat-card class="col-span-6 md:col-span-4 border rounded p-4" style="max-height: 200px;">
 		<mat-card-content >
 			<div class="grid grid-cols-12 gap-4 lg:gap-8">
 				<div class="col-span-6 md:col-span-6 p-10" >
@@ -126,7 +126,7 @@
 				</div>
 			</div>
 		</mat-card-content>
-	</mat-card>
+	</mat-card> -->
 	<mat-card class="col-span-6 md:col-span-4 border rounded p-4" style="max-height: 200px;">
 		<mat-card-content >
 			<div class="grid grid-cols-12 gap-4 lg:gap-8">
@@ -135,9 +135,9 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{usersCounter}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">Users</a>
+						<a class="card-link" [routerLink]="'/dashboard/user'">Users</a>
 					</div>
 				</div>
 			</div>
@@ -151,15 +151,15 @@
 				</div>
 				<div class="col-span-6 md:col-span-6" >
 					<div class="mt-10" >
-						<h1 class="card-counter pb-10">10</h1></div>
+						<h1 class="card-counter pb-10">{{orderCounters.shipping}}</h1></div>
 					<div class="text-center mt-18" >
-						<a class="card-link" [routerLink]="'/dashboard/saved-items'">Shipping</a>
+						<a class="card-link" [routerLink]="'/dashboard/order'">Shipping</a>
 					</div>
 				</div>
 			</div>
 		</mat-card-content>
 	</mat-card>
-	<mat-card class="col-span-6 md:col-span-4 border rounded p-4" style="max-height: 200px;">
+	<!-- <mat-card class="col-span-6 md:col-span-4 border rounded p-4" style="max-height: 200px;">
 		<mat-card-content >
 			<div class="grid grid-cols-12 gap-4 lg:gap-8">
 				<div class="col-span-6 md:col-span-6 p-10" >
@@ -174,7 +174,7 @@
 				</div>
 			</div>
 		</mat-card-content>
-	</mat-card>
+	</mat-card> -->
 
 </div>
 <!-- <div class="mt-8">

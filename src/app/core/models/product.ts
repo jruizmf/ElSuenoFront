@@ -5,7 +5,10 @@ export interface IProduct {
   productName: string;
   description: string;
   images: string[];
-  productComposeOptions?: IProductComposeOption;
+  needOptionsCompose:boolean,
+  needDocumentOfPrint:boolean,
+  needFieldsToOrder: boolean,
+  composeOptions?: any;
   slug?: string;
   tags: string[];
   attributes: any[];

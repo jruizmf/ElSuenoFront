@@ -16,14 +16,14 @@ export class HttpResponseInterceptor implements HttpInterceptor {
         next: (event) => {
           if (event instanceof HttpResponse) {
             if(event.status == 401) {
-              alert('Unauthorized access!')
+               alert('Unauthorized access!')
             }
           }
           return event;
         },
         error: (error) => {
           if(error.status === 401) {
-            alert('Unauthorized access!')
+             alert('Unauthorized access!')
           }
           else if(error.status === 404) {
             alert('Page Not Found!')

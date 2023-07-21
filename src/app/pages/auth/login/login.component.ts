@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit {
     this._auth.login({
       email: this.f.email.value,
       password: this.f.password.value
-    }).subscribe( res => {
-      console.log(res)
+    }).subscribe( () => {
       this.loginForm.disable();
       this.router.navigate(['dashboard']);
     })

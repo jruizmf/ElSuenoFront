@@ -22,6 +22,10 @@ const DashboardChildrenRoute: Routes = [
     loadChildren: () => import('./dashboard-product/dashboard-product.module').then(m => m.DashboardProductModule)
   },
   {
+    path: 'compose-option',
+    loadChildren: () => import('./dashboard-compose-options/dashboard-compose-option.module').then(m => m.DashboardComposeOptionModule)
+  },
+  {
     path: 'inventory',
     component: InventoryComponent
   },

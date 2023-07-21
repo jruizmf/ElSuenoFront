@@ -30,7 +30,8 @@
           <div class="w-4/12">
             <a href="" class="flex hover:text-primary">
               <div class="max-h-16 w-16 flex-none mr-3 border">
-                <img [src]="product?.images[0]" alt="img">
+                
+                <img [src]="product?.images[0] ? product?.images[0]  : 'assets/images/No_image_available.png'" alt="img">
               </div>
               <h6 class="flex-auto">{{ product?.productName }}</h6>
             </a>
@@ -60,7 +61,7 @@
                 <mat-icon>dialpad</mat-icon>
                 <span>Details</span>
               </button> -->
-              <a mat-menu-item routerLink="edit">
+              <a mat-menu-item routerLink="edit/{{product._id}}">
                 <mat-icon>edit</mat-icon>
                 <span >edit</span>
               </a>
@@ -79,7 +80,6 @@
                 type= "warning"
                 [showCancelButton]="true"
                 [focusCancel]="true">
-                <div *swalPartial>nkdlsnflndsklfn</div>
               </swal>
             </mat-menu>
           </div>

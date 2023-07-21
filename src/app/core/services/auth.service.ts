@@ -22,9 +22,11 @@ export class AuthService {
 
   login(auth: Auth): Observable<any> {
     return this.http.post<Auth>(`${AUTH_API}login`,  auth )
-            .pipe(map(async (u: any) => {
-                this.userSubject.next(u);
-                return u;
+            .pipe(map(async (res: any) => {
+              localStorage.setItem('user', JSON.stringify(res.user));
+              localStorage.setItem('token', JSON.stringify(res.token));
+                this.userSubject.next(res.user);
+                return res;
             }));
   }
 

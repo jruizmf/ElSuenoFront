@@ -12,7 +12,7 @@ export interface IOrder {
   subTotal: number;
   tax: number;
   total: number;
-
+  isDelivery: boolean | false;
   isPaid: boolean;
   paidAt?: string;
   paidMetod?: 'paypal' | 'square';

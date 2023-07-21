@@ -22,7 +22,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     DashboardProfileComponent,
     DashboardOrderComponent,
     InventoryComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [CommonModule, SweetAlert2Module.forChild({ /* options */ }), DashboardRoutingModule, SharedModule, MatMenuModule]
 })
