@@ -39,14 +39,14 @@ export class UserService {
                 return u;
             }));
   }
-  update(user: IUser): Observable<any> {
-    return this.http.patch<IUser>(`${USER_API}${user._id}`,  user )
+  update(_id:string, user: IUser): Observable<any> {
+    return this.http.patch<IUser>(`${USER_API}${_id}`,  user )
             .pipe(map(async (u: any) => {
                 return u;
             }));
   }
-  delete(user: IUser): Observable<any> {
-    return this.http.delete<Auth>(`${USER_API}${user._id}` )
+  delete(_id:string): Observable<any> {
+    return this.http.delete<Auth>(`${USER_API}${_id}` )
             .pipe(map(async (u: any) => {
                 return u;
             }));

@@ -31,7 +31,7 @@ export class DashboardProductFormComponent {
     needOptionsCompose: false,
     images:[],
     tags:[],
-    composeOptions: null,
+    composeOptions: [],
     attributes: []
   };
   fileName: string = "";
@@ -40,57 +40,55 @@ export class DashboardProductFormComponent {
   hasAttributesAdded:boolean = false
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   composeOptions: any[] = [];
-  composeOption: any = "";
   images: any[] = [];
   announcer = inject(LiveAnnouncer);
   priceForm: FormGroup = new FormGroup({});
   salesForOrderForm: FormGroup = new FormGroup({});
   productID: any;
-
+  productIdentifier:string = ""
   isEditing: boolean;
+  isLoading: boolean;
 
   constructor(private fb: FormBuilder, private _composeOptionService: ComposeOptionService, public dialog: MatDialog,
      private _productService: ProductsService, private _uploadService: FileService, private router: Router, private route:ActivatedRoute) { 
+      this.isLoading = true;
       this.form = this.fb.group({
         productName: ["", [Validators.required, Validators.minLength(4)]],
         description: ["", [Validators.required, Validators.minLength(4)]],
         needOptionsCompose:[false],
-        needFieldsToOrder:[false],
-        composeOption: [""],
-        attributes: this.fb.array([])
+        needFieldsToOrder:[false]
       });
       this.productID = this.route.snapshot.paramMap.get('term')
       if (this.productID == null) {
         this.isEditing = false
-        this.product = this.form.value as IProduct;
+        
+        this.isLoading = false;
       } else{
         this.isEditing = true;
         this._productService.findByTerm(this.productID).then((product:any) => {
-          this.product = product.product as IProduct;
 
-          let needOptionsCompose= this.product.composeOptions != null
-     
+          this.product = product.product as IProduct;
+          if (product.product.needOptionsCompose) {
+            this.product.composeOptions = product.options[0].composeOptions;
+          }
+          this.hasAttributesAdded = true;
           this.form.controls['productName'].patchValue(this.product.productName);
           this.form.controls['description'].patchValue(this.product.description);
           this.form.controls['needOptionsCompose'].patchValue(this.product.needOptionsCompose);
           this.form.controls['needFieldsToOrder'].patchValue(false);
-          this.form.controls['composeOption'].patchValue("");
+     
+          this.isLoading = false;
         });
       }
-     
   }
 
   ngOnInit(): void {
     this.getComposeOptions();
-    
-    this.attributeForm = this.fb.group({
-      prices: this.fb.array([]),
-      salesForOrderPermit: this.fb.array([]),
-    });
   }
 
   getComposeOptions(): void{
     this._composeOptionService.getAll({}).then((x: any) =>{
+      console.log(x)
       this.composeOptions = x;
     })
   }
@@ -111,9 +109,8 @@ export class DashboardProductFormComponent {
     }
     let product: IProduct = this.getProduct();
     setTimeout(()=>{   
-   
       if (this.isEditing) {
-        this._productService.update(product).subscribe( res => {
+        this._productService.update(this.productIdentifier, product).subscribe( res => {
           this.form.disable();
           this.router.navigate(['dashboard/product']);
           }, error => {
@@ -136,12 +133,22 @@ export class DashboardProductFormComponent {
   getProduct():IProduct{
     let images: any[] = [];
     if(this.images.length > 0){
-      
+      console.log("Images")
       for (let i = 0; i < this.images.length; i++) {
-        this._uploadService.upload(this.images[i]).then((res: any) => {
-          images[i] = res;
-        })
+        console.log(typeof this.images[i])
+        console.log(this.images[i])
+        if (typeof this.images[i] != 'string') {
+          this._uploadService.upload(this.images[i]).then((res: any) => {
+            images[i] = res;
+          })
+        } else {
+          images[i] = this.images[i]
+        }
+        
       }
+    }
+    if (typeof this.product._id != 'undefined') {
+      this.productIdentifier = this.product._id;
     }
     this.product = {
       productName: this.form.value.productName,
@@ -151,10 +158,30 @@ export class DashboardProductFormComponent {
       needFieldsToOrder: this.form.value.needFieldsToOrder,
       needOptionsCompose: this.form.value.needOptionsCompose,
       attributes: this.product.attributes,
-      composeOptions: { composeOption: this.composeOption, increment: 0},
+      composeOptions: this.product.composeOptions,
       tags: this.product.tags
     }
     return this.product;
+  }
+  newComposeOption(): any {
+    return {
+      composeOption: '', 
+      clientIncrement: 0, 
+      federalIncrement: 0,
+      frequentIncrement: 0
+    }
+  }
+  ableComposeOptions(): void {
+    if (!this.isEditing) {
+      this.addComposeOption();
+    }
+  }
+
+  addComposeOption(): void {
+    this.product.composeOptions.push(this.newComposeOption());
+  }
+  removeComposeOption(i:number) {
+    delete this.product.composeOptions[i];
   }
 
   add(event: MatChipInputEvent): void {
@@ -181,13 +208,11 @@ export class DashboardProductFormComponent {
 
   edit(tag: any, event: MatChipEditedEvent) {
     const value = event.value.trim();
-
     // Remove fruit if it no longer has a name
     if (!value) {
       this.remove(tag);
       return;
     }
-
     // Edit existing fruit
     const index = this.product.tags.indexOf(tag);
     if (index >= 0) {
@@ -196,7 +221,10 @@ export class DashboardProductFormComponent {
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(ProductAttributeStepperComponent, {
-      data: this.product.attributes
+      data: {
+        data: this.product.attributes,
+        isEditing: this.isEditing
+      }
     });
   
     dialogRef.afterClosed().subscribe(result => {

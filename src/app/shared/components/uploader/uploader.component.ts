@@ -1,17 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
   styleUrls: ['./uploader.component.scss']
 })
-export class UploaderComponent {
+export class UploaderComponent implements OnInit  {
   @Input() images: any[] = [];
   @Output() eventEmited = new EventEmitter<any[]>();
+  previousFiles: boolean = false
   files: any[] = [];
   /**
    * on file drop handler
    */
+
+  constructor(){
+  }
+
+  ngOnInit(){
+    if (typeof this.images != 'undefined') {
+      this.files = this.images;
+      this.previousFiles = true;
+    }
+  }
+
+  validateType(item: any): boolean {
+    let isFile = typeof item != 'string';
+    return isFile;
+  }
+
   onFileDropped($event: any) {
     this.prepareFilesList($event);
   }

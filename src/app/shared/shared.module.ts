@@ -35,6 +35,8 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {MatStepperModule} from '@angular/material/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 
 const commonModules = [
         FormsModule,
@@ -63,6 +65,9 @@ const commonModules = [
         MatDialogModule,
         MatChipsModule,
         MatStepperModule,
+        BrowserModule, 
+    BrowserAnimationsModule
+        
 ];
 
 @NgModule({

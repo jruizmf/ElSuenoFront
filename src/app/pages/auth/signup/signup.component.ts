@@ -42,7 +42,6 @@ export class SignupComponent implements OnInit {
       email: this.f.email.value,
       password: this.f.password.value
     }).subscribe( res => {
-      console.log(res)
       this.signupForm.disable();
 
       this.router.navigate(['auth/login']);
@@ -50,8 +49,6 @@ export class SignupComponent implements OnInit {
   }
 
   validatePassword():boolean{
-    console.log(this.signupForm.controls['password'].value)
-    console.log(this.signupForm.controls['confirmPassword'].value)
     if(this.signupForm.controls['password'].value == this.signupForm.controls['confirmPassword'].value){
       this._matchPassword = true;
       return true;

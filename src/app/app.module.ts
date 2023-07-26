@@ -17,9 +17,7 @@ import { HttpResponseInterceptor } from './core/interceptors/http-response.inter
   ],
   imports: [
     HttpClientModule,
-    BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
   ],
   providers: [
     HttpClientModule, 

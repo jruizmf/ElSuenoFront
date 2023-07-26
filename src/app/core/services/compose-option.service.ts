@@ -5,7 +5,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-const USER_API = 'http://localhost:3000/api/compose-option/';
+const COMPOSE_OPTION_API = 'http://localhost:3000/api/compose-option/';
 
 @Injectable({
   providedIn: 'root'
@@ -19,32 +19,33 @@ export class ComposeOptionService {
   }
 
   getAll(filter: any): any {
-    return this.http.get<any>(`${USER_API}all`,  filter ).toPromise()
+    return this.http.get<any>(`${COMPOSE_OPTION_API}all`,  filter ).toPromise()
+    .then((res: any) => {
+      return res
+    });
+  }
+  
+  findByTerm(term: string): any {
+    return this.http.get<any>(`${COMPOSE_OPTION_API}${term}`).toPromise()
     .then((res: any) => {
       return res
     });
   }
 
-  register(user: IProductComposeOption): Observable<any> {
-    return this.http.post<IProductComposeOption>(`${USER_API}register`, user)
-            .pipe(map(async (u) => {
-                return u;
-            }));
-  }
-  save(user: IProductComposeOption): Observable<any> {
-    return this.http.post<IProductComposeOption>(`${USER_API}create`,  user )
+  save(composeOption: IProductComposeOption): Observable<any> {
+    return this.http.post<IProductComposeOption>(`${COMPOSE_OPTION_API}create`,  composeOption )
             .pipe(map(async (u: any) => {
                 return u;
             }));
   }
-  update(user: IProductComposeOption): Observable<any> {
-    return this.http.patch<IProductComposeOption>(`${USER_API}${user._id}`,  user )
+  update(_id: string, composeOption: IProductComposeOption): Observable<any> {
+    return this.http.patch<IProductComposeOption>(`${COMPOSE_OPTION_API}${_id}`,  composeOption )
             .pipe(map(async (u: any) => {
                 return u;
             }));
   }
-  delete(user: IProductComposeOption): Observable<any> {
-    return this.http.delete<IProductComposeOption>(`${USER_API}${user._id}` )
+  delete(_id: string,): Observable<any> {
+    return this.http.delete<IProductComposeOption>(`${COMPOSE_OPTION_API}${_id}` )
             .pipe(map(async (u: any) => {
                 return u;
             }));

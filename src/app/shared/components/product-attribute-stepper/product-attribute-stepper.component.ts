@@ -39,14 +39,17 @@ export class ProductAttributeStepperComponent {
   isLinear = false;
 
   constructor(private fb: FormBuilder,  public dialogRef: MatDialogRef<DashboardProductFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Attributes) {
-
-    this.attributes = {
-      prices: [],
-      salesForOrderPermit : []
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    if (data.isEditing) {
+      this.attributes = data.data[0]
+    } else{
+      this.attributes = {
+        prices: [],
+        salesForOrderPermit : []
+      }
+      this.addPrice();
+      this.addSaleForOrder();
     }
-    this.addPrice();
-    this.addSaleForOrder();
   }
 
   newPrice(): Price {

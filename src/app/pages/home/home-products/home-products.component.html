@@ -7,15 +7,17 @@
     <div class="grid grid-cols-12 gap-6 xxl:gap-8">
       <div *ngFor="let product of products" class="col-span-12 md:col-span-6 xl:col-span-4">
         <mat-card class="ll-product">
-          <img mat-card-image [src]="product?.images[0]" alt="{{ product.name }}" style="width: 100%; margin: 0 0 20px" />
+          <img mat-card-image [src]="product?.images[0] ? product?.images[0] : './../../../../assets/images/No_image_available.png'" alt="{{ product.productName }}"
+           style="width: 100%; margin: 0 0 20px; width: 482px; height: 241px;" />
           <mat-card-content class="flex">
             <div class="flex-none w-10">
               <!-- <img src="{{ product?.created_by?.avatar }}" alt="product?.created_by?.name" /> -->
             </div>
             <div class="flex-grow pl-3">
               <h2 class="ll-product__name">
-                <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
+                <a [routerLink]="['/products', product.slug]">{{ product.productName }}</a>
               </h2>
+              <p>{{ product.description | slice: 0:25}}</p>
               <div class="flex justify-between mt-5">
                 <div class="ll-product__price-label">Prices:</div>
                 <div class="ll-product__price text-accent font-bold">
@@ -26,7 +28,7 @@
                   > €{{ product.price }} </a>-->
                 </div> 
               </div>
-               <div class="flex justify-between mt-5"> <!--*ngIf="expandPrices"> -->
+               <div class="flex justify-between my-5"> <!--*ngIf="expandPrices"> -->
                 <table >
                   <thead>
                     <tr>
@@ -44,19 +46,19 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-
+                  <tbody *ngFor="let price of product.attributes[0].prices">
+                    <tr  style="text-align: center;">
+                      <td class="cell-price">
+                        {{price.sizeTitle}}
                       </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
+                      <td class="cell-price">
+                        ${{price.clientPrice}}
                       </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
+                      <td class="cell-price">
+                        ${{price.frequentPrice}}
                       </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
+                      <td class="cell-price">
+                        ${{price.federalPrice}}
                       </td>
                     </tr>
                   </tbody>
@@ -69,7 +71,7 @@
               <mat-icon color="warn">star</mat-icon> {{ product.rating }}/5
             </div> -->
             <div class="flex-1 text-center">
-              <a [routerLink]="['/products', product.id]" 
+              <a [routerLink]="['/products', product.slug]" 
                 mat-raised-button 
                 style="background-color: #15b3e8; color: #FFFFFF;"  
                 class="px-4"

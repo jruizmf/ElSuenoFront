@@ -52,11 +52,10 @@ export class AuthService {
     let user:IUser = {}
     if(typeof localStorage.getItem('user') == 'string'){
       let userString: any = localStorage.getItem('user');
-      console.log(userString)
+      
       let userStored = JSON.parse(userString)
       user = userStored;
     }
-    console.log(user)
     return user;
   }
   getToken(): string | null{

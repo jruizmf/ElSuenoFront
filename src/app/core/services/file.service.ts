@@ -33,25 +33,18 @@ export class FileService {
 
   uploadMultiple(files: File[]): any {
     try {
-      console.log("Uploading Multiple")
-      console.log(files)
       let _files: any[] = []
       if (files.length > 0) {
         files.forEach( (file: File) => {
-          console.log(file)
           this.http.post<any>(`${FILE_API}upload`,  file )
               .pipe(map(async (res: any) => {
-                console.log(res)
                 _files.push(res);
               }));
         })
       }
-      console.log("Result upload")
-      console.log(_files)
+      
       return {data: _files, status: true};
     } catch (error) {
-      console.log("Error upload")
-      console.log(error)
       return {error: error, status: false};
     }
     

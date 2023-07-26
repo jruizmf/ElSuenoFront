@@ -1,7 +1,7 @@
-<div>
+<div *ngIf="!isLoading">
 	<!-- User Start -->
     <form [formGroup]="form"  (ngSubmit)="submit(form)" autocomplete="off">
-        <h3 style="color: #00000070; font-weight: 500;">Edit Product</h3>
+        <h3 style="color: #00000070; font-weight: 500;">{{ isEditing ? 'Edit' : "Add"}} Product</h3>
         <!-- User Meta Start -->
         <div class="border bg-white mt-8 rounded-md">
             <div class="flex flex-wrap p-4">
@@ -21,18 +21,67 @@
                     <div class="ll-dataset mt-4">
                         <div class="form-element" style="width: 70%;">
                             <label for="needOptionsCompose">Has compose options:</label>
-                            <mat-slide-toggle formControlName="needOptionsCompose"></mat-slide-toggle>
+                            <mat-slide-toggle formControlName="needOptionsCompose" (ngModelChange)="ableComposeOptions()"></mat-slide-toggle>
                           </div>
                     </div>
-                    <div class="ll-dataset mt-4" *ngIf="form.value.needOptionsCompose">
-                        <mat-form-field class="form-element" style="width: 70%;">
-                            <mat-label for="needOptionsCompose">Compose options</mat-label>
-                            <mat-select matInput required formControlName="composeOption" [(ngModel)]="composeOption">
-                                <mat-option selected>Select</mat-option>
-                                <mat-option *ngFor="let item of composeOptions"  [value]="item._id">{{item.optionName}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <div  *ngIf="form.value.needOptionsCompose">
+                        <div class="flex " >
+                            <h4 class="mt-5">Compose Options</h4>
+                                <div class="flex items-end ml-auto pr-10" style="display: block;
+                                text-align: end;">
+
+                                    <button 
+                                        (click)="addComposeOption()"
+                                        type="button"
+                                        mat-icon-button class="more-button" aria-label="Toggle menu" style="color: #18bc02;"
+                                        matTooltip="Add Compose Option"
+                                        aria-label="Add Compose Option"
+                                    >
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <form >
+                            <div *ngFor="let item of product.composeOptions; let i=index" style="border-bottom: 1px solid #f5f5f5;">
+                                <h5>Compose Option {{i+1}}</h5>
+                                <div class="ll-dataset mt-4" >
+                                    <div>
+                                        <mat-form-field class="form-element" style="width: 90%;">
+                                            <mat-label for="needOptionsCompose">Compose options</mat-label>
+                                            <mat-select matInput required name="composeOption_{{i}}" [(ngModel)]="product.composeOptions[i].composeOption">
+                                                <mat-option selected>Select</mat-option>
+                                                <mat-option *ngFor="let item of composeOptions"  [value]="item._id">{{item.optionName}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field class="form-element" style="width: 90%;">
+                                            <mat-label for="needOptionsCompose">Client Increment</mat-label>
+                                            <input matInput [type]="'text'" placeholder="Client Increment" name="clientIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].clientIncrement">
+                                        </mat-form-field>
+                                    </div>
+                                
+                                </div>
+                                <div class="ll-dataset mt-4" *ngIf="form.value.needOptionsCompose">
+                                    <div>
+                                        <mat-form-field class="form-element" style="width: 90%;">
+                                            <mat-label for="needOptionsCompose">Frequent Increment</mat-label>
+                                            
+                                            <input matInput [type]="'text'" placeholder="Frequent Increment" name="frequentIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].composeOption">
+                                        </mat-form-field>
+                                    </div>
+                                    <div>
+                                        <mat-form-field class="form-element" style="width: 90%;">
+                                            <mat-label for="needOptionsCompose">Federal Increment</mat-label>
+                                            <input matInput [type]="'text'" placeholder="Federal Increment" name="federalIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].composeOption">
+                                        </mat-form-field>
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    
                     <div class="ll-dataset mt-4">
                         <!-- <div class="form-element" style="width: 70%;">
                             <label for="needFieldsToOrder">Need fields to order:</label>
@@ -68,7 +117,7 @@
                         </mat-form-field>
                     </div>
                      <div class="ll-dataset">
-                        <app-uploader [images]="images"  (eventEmited)="addImages($event)" ></app-uploader>
+                        <app-uploader *ngIf="!isLoading" [images]="product.images"  (eventEmited)="addImages($event)" ></app-uploader>
                     </div>
                     <div class="ll-dataset">
                     
@@ -76,22 +125,13 @@
                         
                     </div>
                     <!--<div class="ll-dataset mt-4">
-                        <mat-form-field style="width: 80%;">
-                            <mat-label>Telephone:</mat-label>
-                            <input matInput type="telephone" formControlName="telephone" placeholder="Your Telephone">
-                            <mat-icon matSuffix>telephone_outline</mat-icon>
-                            <mat-hint>Input your telephone number</mat-hint>
                             <mat-error *ngIf="form.controls['email'].errors?.['required']">Telephone is required</mat-error>
                             <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid telephone</mat-error>
-                        </mat-form-field>
                     </div> -->
                 </div>
                 
             </div>
         </div>
-        <!-- User Meta End -->
-        <!-- User Meta Start -->
-        
-	<!-- User Meta End -->
     </form>
 </div>
+<ll-loader [center]="true"></ll-loader>

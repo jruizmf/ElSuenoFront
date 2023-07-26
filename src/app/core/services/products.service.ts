@@ -32,16 +32,16 @@ export class ProductsService {
                 return p;
             }));
   }
-  update(product: IProduct): Observable<any> {
-    return this.http.patch<IProduct>(`${PRODUCT_API}${product?.slug}`,  product )
+  update(index:string, product: IProduct): Observable<any> {
+    return this.http.patch<IProduct>(`${PRODUCT_API}${index}`,  product )
             .pipe(map(async (p: any) => {
                 return p;
             }));
   }
-  delete(product: IProduct): Observable<any> {
-    return this.http.delete<IProduct>(`${PRODUCT_API}${product._id}` )
-            .pipe(map(async (p: any) => {
-                return p;
+  delete(_id: string): Observable<any> {
+    return this.http.delete(`${PRODUCT_API}${_id}` )
+            .pipe(map(async () => {
+                return true;
             }));
   }
 }

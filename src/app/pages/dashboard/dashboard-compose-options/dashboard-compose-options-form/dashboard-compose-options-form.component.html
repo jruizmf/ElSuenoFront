@@ -1,0 +1,118 @@
+<div *ngIf="!isLoading">
+	<!-- User Start -->
+    <form [formGroup]="form"  (ngSubmit)="submit(form)" autocomplete="off">
+        <h3 style="color: #00000070; font-weight: 500;">{{ isEditing ? 'Edit' : "Add"}} Compose Option</h3>
+        <!-- User Meta Start -->
+        <div class="border bg-white mt-8 rounded-md">
+            <div class="flex flex-wrap p-4">
+                <div class="w-full  mt-4 sm:mt-0">
+                    <div class="ll-dataset">
+                        <mat-form-field class="form-element" style="width: 70%;">
+                            <mat-label>Option name:</mat-label>
+                            <input matInput [type]="'text'" placeholder="Option name" formControlName="optionName">
+                          </mat-form-field>
+                    </div>
+                    <div>
+                        <div class=" " >
+                            <h4 class="mt-5">Options</h4>
+                                <div class="flex items-end ml-auto pr-10" style="display: block;
+                                text-align: end;">
+
+                                    <button 
+                                        (click)="addOption()"
+                                        type="button"
+                                        mat-icon-button class="more-button" aria-label="Toggle menu" style="color: #18bc02;"
+                                        matTooltip="Add Option"
+                                        aria-label="Add Option"
+                                    >
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                        <form >
+                            <div *ngFor="let item of composeOption.options; let i=index" style="border-bottom: 1px solid #f5f5f5;">
+                                <div style=" text-align: end;">
+                                    <button (click)="removeOption(i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                                </div>
+                                <h5>Option {{i+1}}</h5>
+                                <div class="flex" >
+                                    <div class="w-full sm:w-1/2" >
+                                        <div class="ll-dataset mt-4" >
+                                            <mat-form-field class="form-element" style="width: 90%;">
+                                                <mat-label for="needOptionsCompose">Control Name</mat-label>
+                                                <input matInput [type]="'text'" placeholder="Control Name" name="controlName_{{i}}" [(ngModel)]="composeOption.options[i].controlName">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="w-full sm:w-1/2" >
+                                       <div class="ll-dataset mt-4" >
+                                        <mat-form-field class="form-element" style="width: 90%;">
+                                                <mat-label for="needOptionsCompose">Control Type</mat-label>
+                                                <input matInput [type]="'text'" placeholder="Control Type" name="controlType_{{i}}" [(ngModel)]="composeOption.options[i].controlType">
+                                        </mat-form-field> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="mt-1">Values</h4>
+                                    <div class="flex items-end ml-auto pr-10" style="display: block;
+                                    text-align: end;">
+                                        <button 
+                                            (click)="addOptionValue(i)"
+                                            type="button"
+                                            mat-icon-button class="more-button" aria-label="Toggle menu" style="color: #18bc02;"
+                                            matTooltip="Add Option Value"
+                                            aria-label="Add Option Value"
+                                        >
+                                            <mat-icon>add</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div *ngFor="let value of composeOption.options[i].values; let _i=index">
+                                        <div style=" text-align: end;">
+                                            <button (click)="removeOptionValue(i, _i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                                        </div>
+                                        <h5>Value {{i+1}}</h5>
+                                            <div class="flex" >
+                                                <div class="w-full sm:w-1/2" >
+                                                    <div class="ll-dataset mt-4" >
+                                                        <mat-form-field class="form-element" style="width: 90%;">
+                                                            <mat-label for="needOptionsCompose">Value Name</mat-label>
+                                                            <input matInput [type]="'text'" placeholder="Value Name" name="valueName_{{i}}_{{_i}}" [(ngModel)]="composeOption.options[i].values[_i].valueName">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="w-full sm:w-1/2" >
+                                                <div class="ll-dataset mt-4" >
+                                                    <mat-form-field class="form-element" style="width: 90%;">
+                                                            <mat-label for="needOptionsCompose">Value</mat-label>
+                                                            <input matInput [type]="'text'" placeholder="Value" name="value_{{i}}" [(ngModel)]="composeOption.options[i].values[_i].value">
+                                                    </mat-form-field> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                     
+                    
+                </div>
+                 <div class="w-full sm:w-1/2">
+                    
+                    
+                    <div class="ll-dataset">
+                    
+                        <button mat-raised-button color="info" type="submit" style="color: rgb(0, 196, 55); border: 1px solid rgb(0, 196, 55); background-color: #FFFFFF;" >Save changes </button>
+                        
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+        <!-- User Meta End -->
+        <!-- User Meta Start -->
+        
+	<!-- User Meta End -->
+    </form>
+</div>
+<ll-loader [center]="true"></ll-loader>
