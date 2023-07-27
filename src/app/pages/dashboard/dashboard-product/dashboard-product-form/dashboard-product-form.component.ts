@@ -7,7 +7,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { ComposeOptionService } from 'src/app/core/services/compose-option.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ProductAttributeStepperComponent } from 'src/app/shared/components/product-attribute-stepper/product-attribute-stepper.component';
+import { ProductAttributeStepperComponent } from 'src/app/pages/dashboard/dashboard-product/components/product-attribute-stepper/product-attribute-stepper.component';
 import { FileService } from 'src/app/core/services/file.service';
 import { ProductsService } from 'src/app/core/services/products.service';
 import Swal from 'sweetalert2';

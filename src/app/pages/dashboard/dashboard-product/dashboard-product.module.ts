@@ -6,7 +6,7 @@ import { productsDB } from 'src/app/shared/data/products';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DashboardProductRoutingModule } from './dashboard-product-routing.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { ProductAttributeStepperComponent } from 'src/app/shared/components/product-attribute-stepper/product-attribute-stepper.component';
+import { ProductAttributeStepperComponent } from 'src/app/pages/dashboard/dashboard-product/components/product-attribute-stepper/product-attribute-stepper.component';
 
 
 

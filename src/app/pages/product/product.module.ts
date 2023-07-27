@@ -8,9 +8,11 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductHeroComponent } from './product-list/product-hero/product-hero.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ProductStepsModalComponent } from './components/product-steps-modal/product-steps-modal.component';
+import { InputValidatorComponent } from './components/input-validator/input-validator.component';
 
 @NgModule({
-  declarations: [ProductListComponent, ProductDetailsComponent, ProductHeroComponent],
+  declarations: [ProductListComponent, ProductDetailsComponent, ProductHeroComponent, ProductStepsModalComponent, InputValidatorComponent],
   imports: [
     CommonModule,
     SharedModule,

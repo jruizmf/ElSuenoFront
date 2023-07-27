@@ -2,10 +2,21 @@
   <div class="container">
     <div class="grid grid-cols-12 gap-8">
       <div class="col-span-12 md:col-span-7 xl:col-span-8 border p-5">
-        <a href="javascript:void(0)" class="category text-primary inline-block mb-5"><h4>{{ product.category | titlecase}}</h4></a>
+        <a href="javascript:void(0)" class="category text-primary inline-block mb-5"><h3>{{ product.category | titlecase}}</h3></a>
         <h1 class="_title font-medium">{{ product.productName}}</h1>
-        <img width="70%" class="w-full" src="assets/images/products/details.jpg" alt="img not found" />
-   
+        <div class="flex p-5">
+          <div class="w-2/12" *ngFor="let item of product.images; let i = index;">
+            <button class="img-preview-btn" style="border: 1px solid transparent;">
+              <img width="100" height="100" src="{{item}}" alt="" (click)="selectImage(i)">
+            </button>
+          </div>
+          <div class="w-10/12">
+          
+            <img class="w-full" [src]="selectedImage" alt="img not found" />
+          </div>
+        </div>
+        
+        
 
         <div class="ll-content mt-8">
           <h6>Description:</h6>
@@ -17,10 +28,11 @@
       <div class="col-span-12 md:col-span-5 xl:col-span-4">
         <div class="border">
           <div class="border-b text-center pt-10 pb-10">
-            <div class="text-accent text-4xl font-semibold">$300.00</div>
+            <div class="text-accent text-4xl font-semibold">{{ selectedPrice | currency:'USD'}}</div>
             <div class="font-medium text-lg mt-3 text-gray-400 tracking-wider">Price</div>
           </div>
           <div class="border-b p-5">
+            <h5>Sizes:</h5>
             <ul class="service-info">
               <li class="py-2" *ngFor="let item of product.attributes[0].prices">
                 <div class="flex items-center">
@@ -35,26 +47,27 @@
             </ul>
           </div>
           <div class="border-b p-5">
-            <h5>Addons Services</h5>
+            <h5>Dimensions</h5>
             <div class="flex mt-2">
               <div class="sm:pt-1 mr-3 sm:mr-6 md:mr-8">
                 <input type="checkbox" class="appearance-none border border-gray-300 checked:bg-gray-400 checked:border-transparent ..." />
               </div>
               <div class="flex-grow">
-                <div class="price sm:float-right font-bold">€200.00</div>
-                <h6 class="text-gray-800">Execution after work</h6>
-                <p class="mt-2">
-                  Thanks to our home office approach, we can serve you during the entire microservice even after work, if that suits you
-                  better. The following times are possible after close of business: sun - thu, 9 p.m. - 7 p.m.
-                </p>
+                <h6 class="text-gray-800">{{size.sizeTitle}}</h6>
+                <span *ngFor="let s of size.sizes">
+                  
+                  <p class="mt-2">
+                    <b>{{s.sizeType}}</b>: {{s.sizeValue + ' ' + s.sizeUnit}}
+                  </p>
+                </span>
+        
               </div>
             </div>
           </div>
           <div class="border-b px-5 pt-10 pb-12 text-center">
             <!-- <p class="text-gray-400 mb-4">This price can increase due to additional bookings</p> -->
-            <button mat-flat-button class="py-3 px-20 text-xl font-bold" 
-            style="color: #fff; border-radius: 30px;     width: 100%;
-            font-weight: 500; background-color: #3A64D8;" [disabled]="isDisabled"><span class="material-icons">shopping_cart</span> Add to Cart</button>
+            <button mat-flat-button class="py-3 px-20 text-xl font-bold" [className]="isDisabled ? 'cart-btn-disabled' : 'cart-btn'"
+              (click)="openDialog()"><span class="material-icons">shopping_cart</span> Add to Cart</button>
           </div>
         </div>
         <!-- <div class="border mt-5 px-5 py-10 text-center">

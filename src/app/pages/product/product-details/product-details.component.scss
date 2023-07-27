@@ -105,3 +105,26 @@
   z-index: 90;
   line-height: 1.8em;
 }
+
+.img-preview-btn{
+  opacity: .7;
+}
+.img-preview-btn:hover{
+  opacity: 1;
+}
+.cart-btn{
+  color: #fff; 
+  border-radius: 30px;     
+  width: 100%;
+  font-weight: 500; 
+  background-color: #3A64D8;
+}
+
+.cart-btn-disabled{
+  color: #fff; 
+  border-radius: 30px;     
+  width: 100%;
+  font-weight: 500; 
+  background-color: #3A64D8;
+  opacity: 0.7;
+}

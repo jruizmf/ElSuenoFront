@@ -13,11 +13,13 @@ import { HttpResponseInterceptor } from './core/interceptors/http-response.inter
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     HttpClientModule,
+    BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [
     HttpClientModule, 

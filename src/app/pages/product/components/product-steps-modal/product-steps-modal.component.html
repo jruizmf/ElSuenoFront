@@ -1,0 +1,36 @@
+<!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
+  </button> -->
+  <mat-stepper [linear]="isLinear" #stepper  style="overflow: scroll;
+  width: fit-content !important;
+  max-height: 100vh;">
+    <form >
+        <mat-step *ngFor="let item of options.composeOptions; let i = index;" >
+            <ng-template matStepLabel>Fill Option - {{item.composeOption.optionName}}:</ng-template>
+            <div class="p-5">
+               
+                <div *ngFor="let option of item.composeOption.options; let _i=index" >
+                    <app-input-validator [data]="option" [index]="_i" ></app-input-validator>
+                </div>
+                
+                <div>
+                    <button *ngIf="i != 0"  mat-button style="color: #E60B7B; border: 1px solid #E60B7B;" matStepperPrevious><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+                    <button mat-button style="color: #1B9AC5; border: 1px solid #1B9AC5;" matStepperNext>Next <mat-icon>keyboard_arrow_right</mat-icon></button>
+                    <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+                </div>
+            </div>
+        </mat-step>
+        
+        <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious style="color: #E60B7B; border: 1px solid #E60B7B;" ><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+            
+            <button mat-button color="primary"(click)="stepper.reset()">Reset</button>
+            <button mat-button color="accent" (click)="onNoClick()">Cancel</button>
+            <button mat-button color="accent" (click)="submit()">Finish</button>
+        </div>
+        </mat-step>
+    </form>
+  </mat-stepper>

@@ -1,0 +1,10 @@
+<mat-form-field *ngIf="data.controlType == 'string'" style="width: 85%;">
+    <mat-label>{{ data.controlName}}</mat-label>
+    <input matInput  placeholder="Size title" [(ngModel)]="data.value" (ngModelChange)="emitValue($event, data.controlType)"  name="sizeTitle" required>
+ 
+</mat-form-field>
+<div  *ngIf="data.controlType == 'image'" >
+    <label for="">{{ data.controlName}}</label>
+    <app-uploader  (eventEmited)="emitValue($event, data.controlType)" ></app-uploader>
+                  
+</div>

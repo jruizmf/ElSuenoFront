@@ -58,6 +58,20 @@ export class AuthService {
     }
     return user;
   }
+
+  getRole(): string{
+    let role:string = ""
+    if(typeof localStorage.getItem('user') == 'string'){
+      let userString: any = localStorage.getItem('user');
+      
+      let userStored = JSON.parse(userString)
+      if (typeof userStored.roles[0] != 'undefined') {
+        role = userStored.roles[0];
+      };
+    }
+    return role;
+  }
+
   getToken(): string | null{
     return localStorage.getItem('token');
   }
