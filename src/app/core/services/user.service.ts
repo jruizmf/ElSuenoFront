@@ -7,7 +7,7 @@ import { IUser } from '../models/user';
 import { Router } from '@angular/router';
 
 
-const USER_API = 'http://localhost:3000/api/user/';
+const USER_API = 'http://localhost:3000/api/admin/users/';
 
 
 @Injectable({
@@ -17,7 +17,7 @@ export class UserService {
   public user: Observable<IUser> = new Observable<IUser>();
 
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService, public router: Router) {
-    
+
   }
 
   getAll(filter: any): any {

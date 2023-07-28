@@ -3,7 +3,7 @@ import { IOrder } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
-const ORDER_API = 'http://localhost:3000/api/orders/';
+const ORDER_API = 'http://localhost:3000/api/admin/orders/';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ const ORDER_API = 'http://localhost:3000/api/orders/';
 export class OrderService {
 
   constructor(private http: HttpClient) { }
-  
+
   getAll(filter: any): any {
     return this.http.get<any>(`${ORDER_API}all`,  filter ).toPromise()
     .then((res: any) => {

@@ -15,7 +15,7 @@ export class ComposeOptionService {
   public user: Observable<IProductComposeOption> = new Observable<IProductComposeOption>();
 
   constructor(private http: HttpClient, public jwtHelper: JwtHelperService, public router: Router) {
-    
+
   }
 
   getAll(filter: any): any {
@@ -24,7 +24,7 @@ export class ComposeOptionService {
       return res
     });
   }
-  
+
   findByTerm(term: string): any {
     return this.http.get<any>(`${COMPOSE_OPTION_API}${term}`).toPromise()
     .then((res: any) => {
