@@ -7,7 +7,10 @@ import { SignupComponent } from './signup/signup.component';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    data: { 
+      isLogin: true
+    }
   },
   {
     path: 'signup',

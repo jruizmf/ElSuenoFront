@@ -43,7 +43,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
     canActivate: [AuthGuardService],
     data: { 
-      isDashboard: false
+      isDashboard: false, 
+      isAuth: true
     }
   },
   {

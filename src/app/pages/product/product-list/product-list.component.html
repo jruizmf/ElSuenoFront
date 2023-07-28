@@ -66,94 +66,98 @@
   </div>
 </div>
 <div class="ll-products-area mb-24">
-  <div class="container">
-    <div class="grid grid-cols-12 gap-6 xxl:gap-8" *ngIf="isLoaded">
-      <div *ngFor="let product of products" class="col-span-12 md:col-span-6 xl:col-span-4">
-        <mat-card class="ll-product">
-          <img mat-card-image [src]="product?.images[0]" alt="{{ product.name }}" style="width: 100%; margin: 0 0 20px" />
-          <mat-card-content class="flex">
-            <div class="flex-none w-10">
-              <!-- <img src="{{ product?.created_by?.avatar }}" alt="product?.created_by?.name" /> -->
-            </div>
-            <div class="flex-grow pl-3">
-              <h2 class="ll-product__name">
-                <a [routerLink]="['/products', product.id]">{{ product.name }}</a>
-              </h2>
-              <div class="flex justify-between mt-5">
-                <div class="ll-product__price-label">Prices:</div>
-                <div class="ll-product__price text-accent font-bold">
-                  <a (click)="expandPrices = !expandPrices"
-                    matTooltip="Info about the action"
-                    aria-label="Please click to show more details"                   
-                  > €{{ product.price }} </a></div>
+  <div>
+    <div class="container">
+      <div class="ll-section-head text-center mb-5">
+        <h3 class="ll-section-head__heaidng">Our Products:</h3>
+        <h4 class="ll-section-head__subheading">Please login to purshase</h4>
+      </div>
+      <div class="grid grid-cols-12 gap-6 xxl:gap-8">
+        <div *ngFor="let product of products" class="col-span-12 md:col-span-6 xl:col-span-4">
+          <mat-card class="ll-product">
+            <img mat-card-image [src]="product?.images[0] ? product?.images[0] : './../../../../assets/images/No_image_available.png'" alt="{{ product.productName }}"
+             style="width: 100%; margin: 0 0 20px; width: 482px; height: 241px;" />
+            <mat-card-content class="flex">
+              <div class="flex-none w-10">
+                <!-- <img src="{{ product?.created_by?.avatar }}" alt="product?.created_by?.name" /> -->
               </div>
-              <div class="flex justify-between mt-5" *ngIf="expandPrices">
-                <table mat-table>
-                  <thead>
-                    <tr>
-                      <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                          Sizes
-                      </th>
-                      <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                          Client
-                      </th>
-                      <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                          Federal
-                      </th>
-                      <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                          Frecuent
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-
-                      </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
-                      </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
-                      </td>
-                      <td style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
-                        
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="flex-grow pl-3">
+                <h2 class="ll-product__name">
+                  <a [routerLink]="['/products', product.slug]">{{ product.productName }}</a>
+                </h2>
+                <p>{{ product.description | slice: 0:25}}</p>
+                <div class="flex justify-between mt-5">
+                  <div class="ll-product__price-label">Prices:</div>
+                  <div class="ll-product__price text-accent font-bold">
+                    <!-- <a 
+                      (click)="expandPrices = !expandPrices"
+                      matTooltip="Please click to show more details"
+                      aria-label="Please click to show more details"   
+                    > €{{ product.price }} </a>-->
+                  </div> 
+                </div>
+                 <div class="flex justify-between my-5"> <!--*ngIf="expandPrices"> -->
+                  <table >
+                    <thead>
+                      <tr>
+                        <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
+                            Size
+                        </th>
+                        <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
+                            Client
+                        </th>
+                        <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
+                            Federal
+                        </th>
+                        <th style="height: 19px; width: 80px; border-bottom: 1px solid #f5f5f5; color: #00000070;">
+                            Frecuent
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let price of product.attributes[0].prices">
+                      <tr  style="text-align: center;">
+                        <td class="cell-price">
+                          {{price.sizeTitle}}
+                        </td>
+                        <td class="cell-price">
+                          ${{price.clientPrice}}
+                        </td>
+                        <td class="cell-price">
+                          ${{price.frequentPrice}}
+                        </td>
+                        <td class="cell-price">
+                          ${{price.federalPrice}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          </mat-card-content>
-          <mat-card-actions class="ll-product__action flex justify-between">
-            <!-- <div class="flex-1 text-center flex items-center justify-center">
-              <mat-icon color="warn">star</mat-icon> {{ product.rating }}/5
-            </div> -->
-            <div class="flex-1 text-center">
-              <a [routerLink]="['/products', product.id]" mat-raised-button style="background-color: #15b3e8; color: #FFFFFF;"  
-               
-                class="px-4"
-              >
-                View Details
-              </a>
-            </div>
-         
-          </mat-card-actions>
-        </mat-card>
+            </mat-card-content>
+            <mat-card-actions class="ll-product__action flex justify-between">
+              <!-- <div class="flex-1 text-center flex items-center justify-center">
+                <mat-icon color="warn">star</mat-icon> {{ product.rating }}/5
+              </div> -->
+              <div class="flex-1 text-center">
+                <a [routerLink]="['/products', product.slug]" 
+                  mat-raised-button 
+                  style="background-color: #15b3e8; color: #FFFFFF;"  
+                  class="px-4"
+                >
+                  View Details
+                </a>
+              </div>
+           
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+      <div class="text-center mt-10">
+        <a mat-raised-button color="accent" [routerLink]="['/products']" style="background-color:#E60B7B; color: #FFFFFF;"  class="px-8 py-2 text-lg">Browse More</a>
       </div>
     </div>
-    <div *ngIf="!isLoaded">
-      <ngx-skeleton-loader 
-        count="9"
-        appearance="circle"
-        [theme]="{ 
-          'border-radius': '5px',
-          height: '280px',
-          width: 'calc(33% - 10px)'
-        }"
-      ></ngx-skeleton-loader>
-    </div>
   </div>
+  
 </div>
 
 <!-- <div class="ll-find-more mt-10 mb-36">

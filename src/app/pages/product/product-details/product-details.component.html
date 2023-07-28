@@ -33,7 +33,7 @@
           </div>
           <div class="border-b p-5">
             <h5>Sizes:</h5>
-            <ul class="service-info">
+            <ul *ngIf="product.attributes[0]" class="service-info">
               <li class="py-2" *ngFor="let item of product.attributes[0].prices">
                 <div class="flex items-center">
                   <div class="button">
@@ -47,22 +47,37 @@
             </ul>
           </div>
           <div class="border-b p-5">
-            <h5>Dimensions</h5>
-            <div class="flex mt-2">
-              <div class="sm:pt-1 mr-3 sm:mr-6 md:mr-8">
-                <input type="checkbox" class="appearance-none border border-gray-300 checked:bg-gray-400 checked:border-transparent ..." />
+            <div class="flex">
+              <div class="w-full sm:w-1/2sm:mt-0">
+                <h5>Dimensions</h5>
+                <div class="flex mt-2">
+                  <div class="sm:pt-1 mr-3 sm:mr-6 md:mr-8">
+                    <input type="checkbox" class="appearance-none border border-gray-300 checked:bg-gray-400 checked:border-transparent ..." />
+                  </div>
+                  <div class="flex-grow">
+                    <h6 class="text-gray-800">{{size.sizeTitle}}</h6>
+                    <span *ngFor="let s of size.sizes">
+                      
+                      <p class="mt-2">
+                        <b>{{s.sizeType}}</b>: {{s.sizeValue + ' ' + s.sizeUnit}}
+                      </p>
+                    </span>
+            
+                  </div>
+                </div>
               </div>
-              <div class="flex-grow">
-                <h6 class="text-gray-800">{{size.sizeTitle}}</h6>
-                <span *ngFor="let s of size.sizes">
-                  
-                  <p class="mt-2">
-                    <b>{{s.sizeType}}</b>: {{s.sizeValue + ' ' + s.sizeUnit}}
-                  </p>
-                </span>
-        
+              <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                <h5>Quantity</h5>
+                <mat-form-field class="form-element" style="width: 90%;" >
+                  <mat-label for="needOptionsCompose">Quantity</mat-label>
+                  <mat-select matInput required name="quantity" [(ngModel)]="cartItem.quantity" (ngModelChange)="selectQuantity($event)">
+                      <mat-option selected>Select</mat-option>
+                      <mat-option *ngFor="let item of salesForOrderPermits"  [value]="item.unitSale">{{item.unitSale}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
               </div>
             </div>
+            
           </div>
           <div class="border-b px-5 pt-10 pb-12 text-center">
             <!-- <p class="text-gray-400 mb-4">This price can increase due to additional bookings</p> -->

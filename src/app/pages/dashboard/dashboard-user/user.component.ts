@@ -8,14 +8,14 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-    view = 'list';
+  view = 'list';
   
-    users: IUser[] | undefined;
-    constructor(private _userService: UserService) {}
+  users: IUser[] | undefined;
+  constructor(private _userService: UserService) {}
   
-    ngOnInit(): void {
-      this.getAll()
-    }
+  ngOnInit(): void {
+    this.getAll()
+  }
 
   async  getAll(){
     await this._userService.getAll({}).then((x: IUser[]) => {

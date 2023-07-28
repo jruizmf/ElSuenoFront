@@ -10,6 +10,7 @@ import { ProductHeroComponent } from './product-list/product-hero/product-hero.c
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProductStepsModalComponent } from './components/product-steps-modal/product-steps-modal.component';
 import { InputValidatorComponent } from './components/input-validator/input-validator.component';
+import { HomeProductsComponent } from '../home/home-products/home-products.component';
 
 @NgModule({
   declarations: [ProductListComponent, ProductDetailsComponent, ProductHeroComponent, ProductStepsModalComponent, InputValidatorComponent],

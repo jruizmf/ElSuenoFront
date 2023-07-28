@@ -10,7 +10,7 @@
             <div class="p-5">
                
                 <div *ngFor="let option of item.composeOption.options; let _i=index" >
-                    <app-input-validator [data]="option" [index]="_i" ></app-input-validator>
+                    <app-input-validator [data]="option" [index]="_i" (eventEmited)="addInputValues($event, i, _i)" ></app-input-validator>
                 </div>
                 
                 <div>

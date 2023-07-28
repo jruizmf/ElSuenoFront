@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { productsDB } from '../../../shared/data/products'; 
 import { ProductsService } from 'src/app/core/services/products.service';
 import { IProduct } from 'src/app/core/models';
@@ -8,7 +8,7 @@ import { IProduct } from 'src/app/core/models';
   styleUrls: ['./home-products.component.scss']
 })
 export class HomeProductsComponent implements OnInit {
-  products: any = [];
+  @Input() products: any = [];
   expandPrices:boolean = false;
   constructor(private _productService: ProductsService) { 
    this.getAll();

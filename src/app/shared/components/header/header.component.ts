@@ -17,7 +17,19 @@ export class HeaderComponent implements OnInit {
   menuList: any[] = [];
   displayList:boolean = false;
   isLessThenLargeDevice: boolean | undefined;
-  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {}
+  cartCount:number= 0
+  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {
+    console.log(localStorage.getItem('cart'))
+    if (localStorage.getItem('cart') != null) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '{}');
+      console.log(cart)
+      console.log(cart.items)
+      console.log(cart.items.length)
+      this.cartCount = cart.items.length
+      console.log(this.cartCount)
+    }
+    
+  }
 
   ngOnInit(): void {
     this.menuList = staticMenuList;

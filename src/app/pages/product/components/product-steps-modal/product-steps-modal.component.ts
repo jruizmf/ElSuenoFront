@@ -2,17 +2,8 @@ import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductDetailsComponent } from '../../product-details/product-details.component';
-export interface cart {
-  productId: string,
-  productName: string,
-  slug: string,
-  image: string,
-  price: Price,
-  quantity: number,
-  total: number,
-  optionComposes: OptionCompose[]
-}
-
+import { AuthService } from 'src/app/core/services/auth.service';
+import { Router } from '@angular/router';
 
 export interface OptionCompose {
   productComposeId: string,
@@ -23,22 +14,6 @@ export interface OptionCompose {
 export interface Value {
   valueName: string,
   value: string
-}
-
-export interface Size{
-  sizeType: string, 
-  sizeValue: number, 
-  sizeUnit: string
-}
-
-
-
-export interface Price {
-  sizeTitle: string,
-  clientPrice: string,
-  frequentPrice: string,
-  federalPrice: string,
-  sizes: Size[]
 }
 export interface SalesForOrder {
   decrementClient: number,
@@ -54,27 +29,56 @@ export interface SalesForOrder {
   styleUrls: ['./product-steps-modal.component.scss']
 })
 export class ProductStepsModalComponent {
+  @Input() cartItem: any;
   @Input() options: any;
   @Output() emitAttributes = new EventEmitter();
   isLinear = false;
   isLogged: boolean = false;
+  valuesList: any[] = [];
+
+  composeOptions: any[] = [];
 
   constructor(private fb: FormBuilder,  public dialogRef: MatDialogRef<ProductDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
+    @Inject(MAT_DIALOG_DATA) public data: any, private _authService: AuthService, private router : Router) {
       this.options = data.data[0];
+      this.cartItem = data.cartItem;
   }
 
-  addInputValues(event: any, i: number, _i: number){
-    console.log(event)
-  }
+  addInputValues(event: any, index:any, optionIndex:any){
+    this.composeOptions[index] = {
+      productComposeId: this.options.composeOptions[index]._id,
+      values: [],
+      increment: this.validateIncrement(this.options.composeOptions[index])
+    }
 
+
+    this.composeOptions[index].values[optionIndex] = {
+      valueName: this.options.composeOptions[index].composeOption.options[optionIndex],
+      value: event[0]
+    }
+  }
+  validateIncrement(item: any){
+    let role =  typeof  this._authService.getRole() as string
+    if(role == "client"){
+      return item.clientPrice;
+    }else if(role == "frequent"){
+      return item.frequentPrice;
+    }else if(role == "federal"){
+      return item.federalPrice;
+    }else{
+     return item.federalPrice;
+    }
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  uploadImages(items: any){
+
+  }
   submit():void {
-    console.log(this.options)
-    this.emitAttributes.emit(this.options);
-    this.dialogRef.close(this.options);
+  
+    this.emitAttributes.emit(this.composeOptions);
+    this.dialogRef.close(this.composeOptions);
   }
 }

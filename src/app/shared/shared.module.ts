@@ -35,6 +35,7 @@ import { UploaderComponent } from './components/uploader/uploader.component';
 import {MatChipsModule} from '@angular/material/chips';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import {MatStepperModule} from '@angular/material/stepper';
+import { HomeProductsComponent } from '../pages/home/home-products/home-products.component';
 
 const commonModules = [
         FormsModule,
@@ -67,7 +68,7 @@ const commonModules = [
 ];
 
 @NgModule({
-  declarations: [HeaderComponent, DndDirective, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent, UploaderComponent, ProgressComponent],
+  declarations: [HeaderComponent,  DndDirective, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent, UploaderComponent, ProgressComponent],
   imports: [CommonModule,
     SweetAlert2Module.forRoot(), RouterModule, ...commonModules],
   exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, UploaderComponent, ...commonModules],

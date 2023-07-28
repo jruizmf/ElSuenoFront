@@ -21,7 +21,7 @@
 	<div class="border bg-white mt-8 rounded-md">
 		<div class="flex p-4 bg-gray-200">
 			<h6 class="text-normal">Primary Information</h6>
-			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" routerLink="edit">
+			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" [routerLink]="'edit/'+user._id">
 				<mat-icon class="_edit_icon mr-2">edit</mat-icon>
 				Edit</a>
 		</div>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="ll-dataset mt-4">
 					<div class="ll-dataset__label">
-						Number:
+						Telephone:
 					</div>
 					<div class="ll-dataset__value">
 						{{ user.phoneNumber }}
@@ -54,9 +54,9 @@
 	<div class="border bg-white mt-8 rounded-md">
 		<div class="flex p-4 bg-gray-200">
 			<h6 class="text-normal">Shipping address</h6>
-			<button class="text-blue-400 hover:text-accent ml-auto flex items-center">
+			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" [routerLink]="'edit/'+user._id">
 				<mat-icon class="_edit_icon mr-2">edit</mat-icon>
-				Edit</button>
+				Edit</a>
 		</div>
 		<div *ngIf="user.address != null">
 			<div class="flex flex-wrap p-4"  *ngFor="let item of user.address" >

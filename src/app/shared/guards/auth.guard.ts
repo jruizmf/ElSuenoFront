@@ -11,6 +11,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const isDashboard = route.data['isDashboard'];
+    const isAuthRoute = route.data['isAuth'];
     
     if(isDashboard){
       if (!this.auth.isAuthenticated()) {
@@ -18,9 +19,13 @@ export class AuthGuardService implements CanActivate {
         return false;
       }
     } else{
-      if (this.auth.isAuthenticated()) {
-        this.router.navigate(['']);
-        return false;
+      if (!this.auth.isAuthenticated()) {
+        if (!isAuthRoute) {
+        
+          this.router.navigate(['']);
+          return false;
+        }
+        
       }
     }
     

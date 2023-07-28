@@ -5,7 +5,7 @@
     
     <!-- =================== COMPONENT CART+SUMMARY ====================== -->
         <div class="grid grid-cols-12 gap-4 lg:gap-8">
-            <div class="col-span-10 md:col-span-8 p-4">
+            <div class="col-span-10 md:col-span-8 p-4" *ngFor="let item of cartItems">
                 <mat-card class="p-6" >
                     <h4 class="card-title mb-4">Your shopping cart</h4>
                     <mat-card-content >
@@ -19,10 +19,10 @@
                         <article class="grid grid-cols-12 gap-4 lg:gap-8 gy-3 mb-4">
                             <div class="col-span-5 md:col-span-5">
                                 <figure class="itemside me-lg-5">
-                                    <div class="aside"><img width="120px" src="./../../../assets/images/products/01-1.png" class="img-sm img-thumbnail"></div>
+                                    <div class="aside"><img width="120px" [src]="item.image ?  item.image : './../../../assets/images/No_image_available.png'" class="img-sm img-thumbnail"></div>
                                     <figcaption class="info">
-                                        <a href="#" class="title">Mens T-shirt Cotton Base</a>
-                                        <p class="text-muted"> Blue, Medium </p>
+                                        <a href="#" class="title">{{ item.productName | titlecase}}</a>
+                                        <!-- <p class="text-muted"> Blue, Medium </p> -->
                                     </figcaption>
                                 </figure>
                             </div>
@@ -36,8 +36,8 @@
                             </div>
                             <div class="col-span-2 md:col-span-2">
                                 <div class="price-wrap lh-sm"> 
-                                    <var class="price h6">$44.80</var>  <br>
-                                    <small class="text-muted"> $12.20 / per item </small> 
+                                    <var class="price h6">{{item.total | currency: 'USD'}}</var>  <br>
+                                    <!-- <small class="text-muted"> $12.20 / per item </small>  -->
                                 </div> <!-- price-wrap .// -->
                             </div>
                             <div class="col-span-3 md:col-span-3">

@@ -27,6 +27,13 @@ export class UserService {
     });
   }
 
+  findOne(string: string): any {
+    return this.http.get<any>(`${USER_API+string}`).toPromise()
+    .then((res: any) => {
+      return res
+    });
+  }
+
   register(user: IUser): Observable<any> {
     return this.http.post<IUser>(`${USER_API}register`, user)
             .pipe(map(async (u) => {

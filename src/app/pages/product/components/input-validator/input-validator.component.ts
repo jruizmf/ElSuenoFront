@@ -13,14 +13,16 @@ export class InputValidatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
   addImages(event:any): void{
     this.data.value = event;
   }
   emitValue(event: any, type: string): void {
+    console.log(type)
     console.log(event)
     if (type == 'image') {
+      console.log("type")
+      console.log(event[0])
       this.eventEmited.emit(event[0]);
     }  else{
       this.eventEmited.emit(event);
