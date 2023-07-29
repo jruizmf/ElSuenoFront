@@ -30,7 +30,8 @@ export class AuthService {
             }));
   }
 
-  register(user: IUser): Observable<any> {
+  register(user: any): Observable<any> {
+
     return this.http.post<IUser>(`${AUTH_API}register`, user)
             .pipe(map(async (u) => {
                 localStorage.setItem('user', JSON.stringify(u));
@@ -49,7 +50,7 @@ export class AuthService {
     this.router.navigate(['/']);
   }
   getUser():IUser{
-    let user:IUser = {}
+    let user:IUser = {addresses: []}
     if(typeof localStorage.getItem('user') == 'string'){
       let userString: any = localStorage.getItem('user');
       

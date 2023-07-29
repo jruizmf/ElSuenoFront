@@ -9,10 +9,84 @@ import { productsDB } from 'src/app/shared/data/products';
 export class DashboardSavedItemComponent implements OnInit {
   view = 'list';
 
-  products: any[] | undefined;
+  orders: any[]  = [];
   constructor() {}
 
   ngOnInit(): void {
-    this.products = productsDB.Product;
+    this.orders = [
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Dean Lynch',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'completed',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Lynch Dean',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'pending',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Lynch Dean',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'rejected',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Dean Lynch',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'initialized',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Dean Lynch',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'complated',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Lynch Dean',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'pending',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Lynch Dean',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'rejected',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Dean Lynch',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'initialized',
+        total: 2145.0
+      },
+      {
+        id: 'e5dcdfsf',
+        orderBy: 'Dean Lynch',
+        productId: 'cdfsfe5d',
+        createdAt: '25.05.2021, 10:00',
+        state: 'complated',
+        total: 2145.0
+      }
+    ];
+
   }
 }

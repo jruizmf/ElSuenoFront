@@ -8,9 +8,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: { 
-      isLogin: true
-    }
   },
   {
     path: 'signup',

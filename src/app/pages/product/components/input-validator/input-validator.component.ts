@@ -18,11 +18,8 @@ export class InputValidatorComponent implements OnInit {
     this.data.value = event;
   }
   emitValue(event: any, type: string): void {
-    console.log(type)
-    console.log(event)
+
     if (type == 'image') {
-      console.log("type")
-      console.log(event[0])
       this.eventEmited.emit(event[0]);
     }  else{
       this.eventEmited.emit(event);

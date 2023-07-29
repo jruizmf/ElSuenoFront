@@ -19,12 +19,10 @@ export class HeaderComponent implements OnInit {
   isLessThenLargeDevice: boolean | undefined;
   cartCount:number= 0
   constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {
-    console.log(localStorage.getItem('cart'))
+
     if (localStorage.getItem('cart') != null) {
       let cart = JSON.parse(localStorage.getItem('cart') || '{}');
-      console.log(cart)
-      console.log(cart.items)
-      console.log(cart.items.length)
+
       this.cartCount = cart.items.length
       console.log(this.cartCount)
     }

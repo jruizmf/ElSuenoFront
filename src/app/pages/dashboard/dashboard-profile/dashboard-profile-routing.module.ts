@@ -10,7 +10,7 @@ const routes: Routes = [
     component: DashboardProfileComponent
   },
   {
-    path: 'edit/:_id',
+    path: 'edit/:term',
     pathMatch: 'full',
     component: ProfileFormComponent
   }

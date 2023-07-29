@@ -18,9 +18,14 @@ export class UploaderComponent implements OnInit  {
   }
 
   ngOnInit(){
-    if (typeof this.images != 'undefined') {
-      this.files = this.images;
-      this.previousFiles = true;
+    console.log(this.images)
+    console.log( typeof this.images[0])
+    if (typeof this.images != 'undefined' && typeof this.images[0] != 'undefined') {
+      if (this.images[0] != '') {
+        
+        this.files = this.images;
+        this.previousFiles = true;
+      }
     }
   }
 

@@ -13,6 +13,7 @@ import { DashboardOrderComponent } from './dashboard-order/dashboard-order.compo
 import { InventoryComponent } from './dashboard-inventory/inventory.component';
 import { UserComponent } from './dashboard-user/user.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { OrderListComponent } from './components/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     DashboardOrderComponent,
     InventoryComponent,
     UserComponent,
+    OrderListComponent,
   ],
   imports: [CommonModule, SweetAlert2Module.forChild({ /* options */ }), DashboardRoutingModule, SharedModule, MatMenuModule]
 })

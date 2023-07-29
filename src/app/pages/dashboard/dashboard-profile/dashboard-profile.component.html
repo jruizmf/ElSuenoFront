@@ -53,13 +53,11 @@
 	<!-- User Meta Start -->
 	<div class="border bg-white mt-8 rounded-md">
 		<div class="flex p-4 bg-gray-200">
-			<h6 class="text-normal">Shipping address</h6>
-			<a class="text-blue-400 hover:text-accent ml-auto flex items-center" [routerLink]="'edit/'+user._id">
-				<mat-icon class="_edit_icon mr-2">edit</mat-icon>
-				Edit</a>
+			<h6 class="text-normal">Shipping addresses</h6>
+		
 		</div>
-		<div *ngIf="user.address != null">
-			<div class="flex flex-wrap p-4"  *ngFor="let item of user.address" >
+		<div *ngIf="user.addresses != null">
+			<div class="flex flex-wrap p-4"  *ngFor="let item of user.addresses" >
 				<div class="w-full sm:w-1/2">
 					<div class="ll-dataset">
 						<div class="ll-dataset__label">
@@ -90,7 +88,7 @@
 							ZIP Code:
 						</div>
 						<div class="ll-dataset__value">
-							{{ item.zip }}
+							{{ item.zipCode }}
 						</div>
 					</div>
 				</div>

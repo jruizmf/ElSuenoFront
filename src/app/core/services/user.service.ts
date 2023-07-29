@@ -7,7 +7,7 @@ import { IUser } from '../models/user';
 import { Router } from '@angular/router';
 
 
-const USER_API = 'http://localhost:3000/api/admin/users/';
+const USER_API = 'http://localhost:3000/api/user/';
 
 
 @Injectable({
@@ -47,6 +47,7 @@ export class UserService {
             }));
   }
   update(_id:string, user: IUser): Observable<any> {
+    console.log(user)
     return this.http.patch<IUser>(`${USER_API}${_id}`,  user )
             .pipe(map(async (u: any) => {
                 return u;

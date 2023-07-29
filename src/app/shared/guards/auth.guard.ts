@@ -5,9 +5,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Injectable()
 export class AuthGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {
-
   }
-
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const isDashboard = route.data['isDashboard'];

@@ -7,10 +7,13 @@ export interface IUser {
   password?: string | null;
   roles?: string[] | ['client'];
   isActive?: boolean | true;
-  address?: IAddress[] | null | undefined;
+  addresses: IAddress[];
+  role?: string | 'client',
   phoneNumber?: string | null;
   banner?: string | null;
   avatar?: string | null;
+  __v?: number;
   // TODO: agregar createdAt y updatedAt
   createdAt?: string;
+  updatedAt?: string;
 }

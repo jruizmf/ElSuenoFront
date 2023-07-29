@@ -76,7 +76,7 @@ export class DashboardProductFormComponent {
           this.form.controls['description'].patchValue(this.product.description);
           this.form.controls['needOptionsCompose'].patchValue(this.product.needOptionsCompose);
           this.form.controls['needFieldsToOrder'].patchValue(false);
-     
+         this. ableComposeOptions()
           this.isLoading = false;
         });
       }
@@ -133,10 +133,7 @@ export class DashboardProductFormComponent {
   getProduct():IProduct{
     let images: any[] = [];
     if(this.images.length > 0){
-      console.log("Images")
       for (let i = 0; i < this.images.length; i++) {
-        console.log(typeof this.images[i])
-        console.log(this.images[i])
         if (typeof this.images[i] != 'string') {
           this._uploadService.upload(this.images[i]).then((res: any) => {
             images[i] = res;

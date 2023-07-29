@@ -40,7 +40,7 @@ export class SignupComponent implements OnInit {
     this._auth.register({
       fullName: this.f.fullName.value,
       email: this.f.email.value,
-      password: this.f.password.value
+      password: this.f.password.value,
     }).subscribe( res => {
       this.signupForm.disable();
 

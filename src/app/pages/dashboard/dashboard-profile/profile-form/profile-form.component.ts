@@ -1,7 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IUser } from 'src/app/core/models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IAddress, IUser } from 'src/app/core/models';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { FileService } from 'src/app/core/services/file.service';
+import { UserService } from 'src/app/core/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile-form',
@@ -13,63 +17,149 @@ export class ProfileFormComponent implements OnInit {
   form: FormGroup = new FormGroup({});
   flag: boolean = true;
   errors:any[]= [];
-  user:IUser;
+  user: IUser = {
+    fullName: "",
+    phoneNumber: "",
+    avatar: "",
+    addresses: [],
+ 
+  };
   fileName: string = "";
   fileAttr = 'Choose File';
+  userID: any = "";
+  images: any = []
+  constructor(private _userService: UserService, private _uploadService: FileService, private router: Router, private route : ActivatedRoute) { 
+    this.userID = this.route.snapshot.paramMap.get('term')
+  }
 
-  constructor(private fb: FormBuilder, private _auth: AuthService) { 
-    this.user = this._auth.getUser();
+
+  getUser(){
+    this._userService.findOne(this.userID).then((res:any) => {
+      this.user = res.user;
+      
+      if(typeof this.user.banner == 'undefined'){
+        this.user.banner = "";
+      }
+      this.addAddress()
+    })  
   }
 
   ngOnInit(): void {
-     this.form = this.fb.group({
-      fullName: ['', [Validators.required, Validators.minLength(10)]],
-      phoneNumber: [null, [Validators.required, Validators.minLength(10)]]
-    });
-  }
-  uploadFileEvt(imgFile: any) {
-    if (imgFile.target.files && imgFile.target.files[0]) {
-      this.fileAttr = '';
-      Array.from(imgFile.target.files).forEach((file: any) => {
-        this.fileAttr += file.name + ' - ';
-      });
-      // HTML5 FileReader API
-      let reader = new FileReader();
-      reader.onload = (e: any) => {
-        let image = new Image();
-        image.src = e.target.result;
-        image.onload = (rs) => {
-          let imgBase64Path = e.target.result;
-        };
-      };
-      reader.readAsDataURL(imgFile.target.files[0]);
-      // Reset if duplicate image uploaded again
-      if(this.fileInput)
-        this.fileInput.nativeElement.value = '';
+    this._userService.findOne(this.userID).then((res:any) => {
+      this.user = res.user;
+      if(typeof this.user.banner == 'undefined'){
+        this.user.banner = "";
+      }
+      if(res.user.addresses.length == 0){
+      
+          this.user.addresses = [
+            {
+              addressName:"",
+              firstName: "",
+              lastName: "",
+              address: "",
+              address2: "",
+              zipCode: "",
+              city: "",
+              state: "",
+              phone: ""
+        
+            }
+          ];
+        
+        
+      }
+      
     
-    } else {
-      this.fileAttr = 'Choose File';
+    })  
+  }
+  
+  addImages(event:any): void{
+    this.images = event;
+    console.log(this.images)
+  }
+  
+  getUserForm():IUser{
+    let images: any[] = [];
+    console.log("Form")
+    console.log(this.images.length)
+    if(this.images.length > 0){
+      for (let i = 0; i < this.images.length; i++) {
+        if (typeof this.images[i] != 'string') {
+          this._uploadService.upload(this.images[i]).then((res: any) => {
+            images[i] = res;
+            this.user.avatar = res
+          })
+        } else {
+          images[i] = this.images[i]
+        }
+      }
+    }
+    console.log("images")
+    console.log(images)
+    if (typeof this.user._id != 'undefined') {
+      this.userID = this.user._id;
+    }
+    delete this.user._id;
+    delete this.user.createdAt;
+    delete this.user.updatedAt;
+    delete this.user.password;
+    delete this.user.__v;
+    delete this.user.role;
+
+    delete this.user.password;
+
+    this.user.fullName = this.user.fullName
+    this.user.phoneNumber= this.user.phoneNumber
+    console.log(images[0])
+    this.user.avatar = images[0]
+    for (let i = 0; i < this.user.addresses.length; i++) {
+      delete this.user.addresses[i]._id
+    }
+    this.user.addresses = this.user.addresses
+   
+   
+   
+    console.log(this.user)
+    return this.user;
+  }
+  newAddress(): any {
+    return {
+      addressName:"",
+      firstName: "",
+      lastName: "",
+      address: "",
+      address2: "",
+      zip: "",
+      city: "",
+      state: "",
+      phone: ""
+
     }
   }
+  
 
-  onFileSelected(event: any) {
-
-    const file:File = event.target.files[0];
-
-    if (file) {
-
-        this.fileName = file.name;
-
-        const formData = new FormData();
-
-        formData.append("thumbnail", file);
-
-        // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-        // upload$.subscribe();
-    }
-}
-  saveDetails(form: any) {
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(form.value, null, 4));
+  addAddress(): void {
+    if(typeof this.user.addresses != 'undefined')
+      this.user.addresses.push(this.newAddress());
+  }
+  removeAddress(i:number) {
+    if(typeof this.user.addresses != 'undefined')
+      delete this.user.addresses[i];
+  }
+  save() {
+    let user: IUser = this.getUserForm()
+    console.log("Save")
+    console.log(user)
+    setTimeout(()=>{   
+      this._userService.update(this.userID, user).subscribe( res => {
+        this.form.disable();
+        this.router.navigate(['dashboard/profile']);
+        }, error => {
+          Swal.fire('Something was wrong..', 'Please contact with technical support!', 'error')
+        }
+      )
+    }, 5000);   
+   
   }
 }
