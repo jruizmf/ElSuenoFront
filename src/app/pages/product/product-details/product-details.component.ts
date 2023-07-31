@@ -6,6 +6,7 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { ProductStepsModalComponent } from '../components/product-steps-modal/product-steps-modal.component';
 import { IProduct } from 'src/app/core/models';
 import { FileService } from 'src/app/core/services/file.service';
+import Swal from 'sweetalert2';
 
 export interface cart {
   productId: string,
@@ -60,12 +61,12 @@ export class ProductDetailsComponent implements OnInit {
   size: any;
   salesForOrderPermits: any[] = [];
   salesForOrderPermit: any | undefined;
-  selectedPrice:string;
+  selectedPrice:number;
   price: Price | undefined;
   selectedImage: string = 'assets/images/No_image_available.png';
 
   constructor(private _productService: ProductsService, private router: Router, private _fileService: FileService, private route : ActivatedRoute, private _authService: AuthService, private dialog: MatDialog) { 
-    this.selectedPrice = "0"
+    this.selectedPrice = 0
     this.slug = this.route.snapshot.paramMap.get('slug')
     this.cartItem = {
       productId: "",
@@ -108,11 +109,11 @@ export class ProductDetailsComponent implements OnInit {
 
   }
   selectPrice(item: any){
-    // this.product.attributes[0].prices[0]
-    let role =  typeof  this._authService.getRole() as string
+   
+    let role =  this._authService.getRole() as string
     this.size = item;
-    console.log(item)
-    let price = "0";
+    console.log(role)
+    let price: number = 0;
     if(role == "client"){
       price = item.clientPrice;
     }else if(role == "frequent"){
@@ -123,6 +124,7 @@ export class ProductDetailsComponent implements OnInit {
       price = item.federalPrice;
     }
     this.price = item;
+    
     this.selectedPrice = price;
   }
   selectSalesForOrderPermit(item: any){
@@ -134,10 +136,33 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectQuantity(event:any){
+    console.log(event)
+    console.log(this.salesForOrderPermits)
+   let selected = this.salesForOrderPermits.find(x=> x.unitSale == event);
+   console.log(selected)
+    
+     let role =  this._authService.getRole() as string
+
+    let decrement = 0;
+    if(role == "client"){
+      decrement = selected.decrementClient;
+    }else if(role == "frequent"){
+      decrement = selected.decrementFrequent;
+    }else if(role == "federal"){
+      decrement = selected.decrementFederal;
+    }else{
+      decrement = selected.decrementFederal;
+    }
+   console.log(selected)
+   this.selectedPrice = this.selectedPrice - decrement;
     this.cartItem.quantity = event;
   }
   openDialog(): void {
     console.log(this.cartItem.quantity)
+    if (this.cartItem.quantity == 0) {
+      Swal.fire('Quantity not added..', 'Please select the quantity of ptoducts!', 'warning')
+      return;
+    }
     this.cartItem = {
       productId: this.product._id,
       productName: this.product.productName,
@@ -145,7 +170,7 @@ export class ProductDetailsComponent implements OnInit {
       image: this.product.images[0],
       price: this.price,
       quantity: this.cartItem.quantity,
-      total: 0,
+      total: this.selectedPrice,
       optionComposes: []
 
     }
@@ -163,8 +188,7 @@ export class ProductDetailsComponent implements OnInit {
         let cartString  = localStorage.getItem('cart')
         let cart: any = { items:[] }
         this.cartItem.optionComposes = result;
-      
-        
+
         if(cartString != null){
           cart = JSON.parse(cartString)
           cart.items.push(this.cartItem)

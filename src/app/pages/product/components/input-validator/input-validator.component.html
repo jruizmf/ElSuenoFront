@@ -5,6 +5,6 @@
 </mat-form-field>
 <div  *ngIf="data.controlType == 'image'" >
     <label for="">{{ data.controlName}}</label>
-    <app-uploader  (eventEmited)="emitValue($event, data.controlType)" ></app-uploader>
+    <app-uploader [limit]="1" (eventEmited)="emitValue($event, data.controlType)" ></app-uploader>
                   
 </div>

@@ -114,8 +114,8 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody *ngFor="let price of product.attributes[0].prices">
-                      <tr  style="text-align: center;">
+                    <tbody *ngIf="product.attributes" >
+                      <tr  style="text-align: center;" *ngFor="let price of product.attributes[0].prices">
                         <td class="cell-price">
                           {{price.sizeTitle}}
                         </td>

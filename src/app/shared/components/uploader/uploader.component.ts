@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-uploader',
@@ -7,13 +8,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class UploaderComponent implements OnInit  {
   @Input() images: any[] = [];
+  @Input() limit : number =  10;
   @Output() eventEmited = new EventEmitter<any[]>();
   previousFiles: boolean = false
   files: any[] = [];
-  /**
-   * on file drop handler
-   */
-
+  
   constructor(){
   }
 
@@ -22,7 +21,6 @@ export class UploaderComponent implements OnInit  {
     console.log( typeof this.images[0])
     if (typeof this.images != 'undefined' && typeof this.images[0] != 'undefined') {
       if (this.images[0] != '') {
-        
         this.files = this.images;
         this.previousFiles = true;
       }
@@ -78,12 +76,18 @@ export class UploaderComponent implements OnInit  {
    * @param files (Files List)
    */
   prepareFilesList(files: Array<any>) {
-    for (const item of files) {
-      item.progress = 0;
-      this.files.push(item);
+    if (this.limit < files.length) {
+      Swal.fire('Action not permited..', 'You cannot add more than '+this.limit+' files!', 'warning')
+    }else{
+      for (const item of files) {
+        
+        item.progress = 0;
+        this.files.push(item);
+      }
+      this.eventEmited.emit(this.files);
+      this.uploadFilesSimulator(0);
     }
-    this.eventEmited.emit(this.files);
-    this.uploadFilesSimulator(0);
+    
   }
 
   /**
