@@ -1,8 +1,11 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { Unsubscribable } from 'rxjs';
+import { Observable, Subscription, Unsubscribable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { menuList as staticMenuList } from '../../data/menus';
+import { CartService } from 'src/app/core/services/cart.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'll-header',
@@ -17,16 +20,13 @@ export class HeaderComponent implements OnInit {
   menuList: any[] = [];
   displayList:boolean = false;
   isLessThenLargeDevice: boolean | undefined;
-  cartCount:number= 0
-  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {
-
-    if (localStorage.getItem('cart') != null) {
-      let cart = JSON.parse(localStorage.getItem('cart') || '{}');
-
-      this.cartCount = cart.items.length
-      console.log(this.cartCount)
-    }
-    
+  cartCount:any = 0;
+  subscription: Subscription;
+  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService, private _cartService: CartService, private router: Router) {
+      this.subscription = this._cartService.getNumber().subscribe((x:any) => {
+        console.log(x)
+        this.cartCount = x;
+      })
   }
 
   ngOnInit(): void {
@@ -36,12 +36,23 @@ export class HeaderComponent implements OnInit {
       this.isLessThenLargeDevice = matches;
     });
   }
-
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
   @HostListener('window:scroll', ['$event'])
   checkScroll():void {
     this.isScrolled = window.pageYOffset > 15;
   }
 
+  goToCart():void{
+    if (this.cartCount == 0) {
+      Swal.fire("Redirecting warning!", "There is no items in cart, redirecting to Products...", "warning")
+      this.router.navigate(['products']);
+    } else {
+      this.router.navigate(['cart']);
+    }
+    
+  }
   logout():void{
     this.auth.logout();
   }

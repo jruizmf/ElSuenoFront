@@ -7,6 +7,7 @@ import { ProductStepsModalComponent } from '../components/product-steps-modal/pr
 import { IProduct } from 'src/app/core/models';
 import { FileService } from 'src/app/core/services/file.service';
 import Swal from 'sweetalert2';
+import { CartService } from 'src/app/core/services/cart.service';
 
 export interface cart {
   productId: string,
@@ -23,6 +24,11 @@ export interface Price {
   clientPrice: string,
   frequentPrice: string,
   federalPrice: string,
+  sizes: Size[]
+}
+export interface PriceItem {
+  sizeTitle: string,
+  price: number,
   sizes: Size[]
 }
 export interface Size{
@@ -62,10 +68,10 @@ export class ProductDetailsComponent implements OnInit {
   salesForOrderPermits: any[] = [];
   salesForOrderPermit: any | undefined;
   selectedPrice:number;
-  price: Price | undefined;
+  price: PriceItem | undefined;
   selectedImage: string = 'assets/images/No_image_available.png';
 
-  constructor(private _productService: ProductsService, private router: Router, private _fileService: FileService, private route : ActivatedRoute, private _authService: AuthService, private dialog: MatDialog) { 
+  constructor(private _productService: ProductsService, private router: Router, private _cartService: CartService, private _fileService: FileService, private route : ActivatedRoute, private _authService: AuthService, private dialog: MatDialog) { 
     this.selectedPrice = 0
     this.slug = this.route.snapshot.paramMap.get('slug')
     this.cartItem = {
@@ -123,12 +129,21 @@ export class ProductDetailsComponent implements OnInit {
     }else{
       price = item.federalPrice;
     }
-    this.price = item;
+    let sizes = item.sizes.map((x:any) =>{
+      delete x._id
+      return x;
+    })
+    this.price = {
+      sizeTitle:item.sizeTitle,
+      sizes: sizes,
+      price: price
+    };
     
     this.selectedPrice = price;
   }
   selectSalesForOrderPermit(item: any){
     this.salesForOrderPermit = item;
+    this.cartItem.quantity = item.unitSale;
   }
   uploadImages(): void {
     this.isDisabled =false;
@@ -136,12 +151,9 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   selectQuantity(event:any){
-    console.log(event)
-    console.log(this.salesForOrderPermits)
-   let selected = this.salesForOrderPermits.find(x=> x.unitSale == event);
-   console.log(selected)
-    
-     let role =  this._authService.getRole() as string
+    let selected = this.salesForOrderPermits.find(x=> x.unitSale == event);
+   
+    let role =  this._authService.getRole() as string
 
     let decrement = 0;
     if(role == "client"){
@@ -153,14 +165,13 @@ export class ProductDetailsComponent implements OnInit {
     }else{
       decrement = selected.decrementFederal;
     }
-   console.log(selected)
+    
    this.selectedPrice = this.selectedPrice - decrement;
     this.cartItem.quantity = event;
   }
   openDialog(): void {
-    console.log(this.cartItem.quantity)
     if (this.cartItem.quantity == 0) {
-      Swal.fire('Quantity not added..', 'Please select the quantity of ptoducts!', 'warning')
+      Swal.fire('Quantity not added..', 'Please select the quantity of products!', 'warning')
       return;
     }
     this.cartItem = {
@@ -172,9 +183,7 @@ export class ProductDetailsComponent implements OnInit {
       quantity: this.cartItem.quantity,
       total: this.selectedPrice,
       optionComposes: []
-
     }
-    //Swal.fire('Something was wrong..', 'Please contact with technical support!', 'warning')
     const dialogRef = this.dialog.open(ProductStepsModalComponent, {
       data: {
         data: this.options,
@@ -184,9 +193,23 @@ export class ProductDetailsComponent implements OnInit {
   
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
+      console.log("result")
       if (typeof result != 'undefined') {
         let cartString  = localStorage.getItem('cart')
         let cart: any = { items:[] }
+          /* let images: any[] = [];
+    if(this.images.length > 0){
+      for (let i = 0; i < this.images.length; i++) {
+        if (typeof this.images[i] != 'string') {
+          this._uploadService.upload(this.images[i]).then((res: any) => {
+            images[i] = res;
+            this.user.avatar = res
+          })
+        } else {
+          images[i] = this.images[i]
+        }
+      }
+    } */
         this.cartItem.optionComposes = result;
 
         if(cartString != null){
@@ -195,9 +218,11 @@ export class ProductDetailsComponent implements OnInit {
           localStorage.setItem('cart', JSON.stringify(
             {items: cart.items}
           ));
-      
+            
+          this._cartService.sendNumber(cart.items.length);
           this.router.navigate(['products']);
         } else{
+          this._cartService.sendNumber(1);
           localStorage.setItem('cart', JSON.stringify(
             {items: [this.cartItem]}
           ));
@@ -208,4 +233,5 @@ export class ProductDetailsComponent implements OnInit {
       }
     });
   }
+
 }

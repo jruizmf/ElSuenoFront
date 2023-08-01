@@ -3,7 +3,7 @@ import { IOrder } from '../models';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 
-const ORDER_API = 'http://localhost:3000/api/admin/orders/';
+const ORDER_API = 'http://localhost:3000/api/orders/';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,12 @@ export class OrderService {
     });
   }
 
+  getUser(filter: any): any {
+    return this.http.get<any>(`${ORDER_API}user`,  filter ).toPromise()
+    .then((res: any) => {
+      return res
+    });
+  }
   save(order: IOrder): Observable<any> {
     return this.http.post<IOrder>(`${ORDER_API}create`,  order )
             .pipe(map(async (x: any) => {

@@ -19,7 +19,7 @@
       </button>
       <div class="hidden items-center md:flex ml-auto">
         <div *ngIf="isLoggeded" class="mx-10 cart">
-          <a [routerLink]="['/cart']">
+          <a (click)="goToCart()">
             <span class="count">{{cartCount}}</span>
           <span class="material-icons">shopping_cart</span>
           </a>

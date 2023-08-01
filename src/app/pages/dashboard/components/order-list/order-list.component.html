@@ -27,27 +27,27 @@
 			<tbody>
 				<tr *ngFor="let order of orders" class="border">
 					<td>
-						<a class="text-primary" href="/">#{{order?.id}}</a>
+						<a class="text-primary" href="/">#{{order?._id}}</a>
 					</td>
 					<td>
-						{{order?.orderBy | titlecase }}
+						{{order?.user.fullName | titlecase }}
 					</td>
 					<td>
-						<span>${{order?.total}}</span>
+						<span>{{order?.total | currency: 'USD'}}</span>
 					</td>
 					<td>
-						<span>{{order?.createdAt}}</span>
+						<span>{{order?.createdAt | date}}</span>
 					</td>
 					<td>
 						<div [ngClass]="{
-							'bg-blue-500 text-blue-500': order?.state === 'completed',
-							'bg-red-500 text-red-500': order?.state === 'rejected',
-							'bg-yellow-500 text-yellow-900': order?.state === 'pending',
-							'bg-primary text-primary': order?.state === 'initialized'
+							'bg-blue-500 text-blue-500': order?.orderState === 'completed',
+							'bg-red-500 text-red-500': order?.orderState === 'unPaid',
+							'bg-yellow-500 text-yellow-900': order?.orderState === 'pending',
+							'bg-primary text-primary': order?.orderState === 'processing'
 							}" 
 							class="text-[12px] bg-opacity-20 rounded-full px-3 inline-block font-bold py-[3px]"
 						>
-							{{ order?.state | titlecase }}
+							{{ order?.orderState | titlecase }}
 						</div>
 					</td>
 					<td class="text-right">

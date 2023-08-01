@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IOrder } from 'src/app/core/models';
+import { OrderService } from 'src/app/core/services/order.service';
 import { productsDB } from 'src/app/shared/data/products';
 
 @Component({
@@ -9,84 +11,16 @@ import { productsDB } from 'src/app/shared/data/products';
 export class DashboardSavedItemComponent implements OnInit {
   view = 'list';
 
-  orders: any[]  = [];
-  constructor() {}
-
+  orders: IOrder[]  = [];
+  constructor(private _orderService: OrderService) {}
   ngOnInit(): void {
-    this.orders = [
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Dean Lynch',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'completed',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Lynch Dean',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'pending',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Lynch Dean',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'rejected',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Dean Lynch',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'initialized',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Dean Lynch',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'complated',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Lynch Dean',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'pending',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Lynch Dean',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'rejected',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Dean Lynch',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'initialized',
-        total: 2145.0
-      },
-      {
-        id: 'e5dcdfsf',
-        orderBy: 'Dean Lynch',
-        productId: 'cdfsfe5d',
-        createdAt: '25.05.2021, 10:00',
-        state: 'complated',
-        total: 2145.0
-      }
-    ];
+    this.getAll()
+  }
 
+  async  getAll(){
+    await this._orderService.getAll({}).then((x: IOrder[]) => {
+      console.log(x)
+      this.orders = x;
+    })
   }
 }

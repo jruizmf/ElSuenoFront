@@ -69,7 +69,7 @@ const commonModules = [
 
 @NgModule({
   declarations: [HeaderComponent,  DndDirective, FooterComponent, FeatureComponent, BaseLayoutComponent, LoaderComponent, SidenavComponent, ErrorPageComponent, UploaderComponent, ProgressComponent],
-  imports: [CommonModule,
+  imports: [CommonModule, 
     SweetAlert2Module.forRoot(), RouterModule, ...commonModules],
   exports: [HeaderComponent, FooterComponent, BaseLayoutComponent, FeatureComponent, LoaderComponent, SidenavComponent, UploaderComponent, ...commonModules],
   providers: [

@@ -94,8 +94,10 @@
                             </dl>
                             
                             <div class="d-grid gap-2 my-3">
-                                <button mat-button href="#" class="btn btn-success w-100"> Make Purchase </button>
-                                <a mat-button routerLink="product" class="btn btn-light w-100"> Back to shop </a>
+                                <a mat-stroked-button color="primary"routerLink="product" class="btn btn-light w-100"> Back to shop </a>
+                                <button mat-stroked-button color="accent"
+                                (click)="createOrder()" class="mx-10"> Make Purchase </button>
+                                
                             </div>
                         </div>
                     </div> <!-- card-body.// -->

@@ -1,29 +1,27 @@
+import { Price, Size, Value } from 'src/app/pages/product/product-details/product-details.component';
 import { ICuponCode, IUser } from './';
 
 export interface IOrder {
   _id?: string;
   user?: IUser;
+  quantity:number;
   orderItems: IOrderItem[];
-  shippingAddress: IShippingAddress;
+  shippingAddress?: IShippingAddress;
   paymentResult?: string;
   coupon?: ICuponCode;
-
-  numberOfItems: number;
-  subTotal: number;
-  tax: number;
+  // numberOfItems: number;
+  // subTotal: number;
+  // tax: number;
   total: number;
   isDelivery: boolean | false;
-  isPaid: boolean;
+  isPaid?: boolean | false;
   paidAt?: string;
   paidMetod?: 'paypal' | 'square';
-
   delivery?: IDelivery;
-
   transactionId?: string;
-
   createdAt?: string;
   updatedAt?: string;
-  orderState?: 'pending' | 'processing' | 'completed';
+  orderState?: 'pending' | 'processing' | 'completed' | 'unPaid';
 }
 
 export interface IDelivery {
@@ -32,21 +30,25 @@ export interface IDelivery {
 }
 
 export interface IOrderItem {
-  _id: string;
-  version?: number;
-  title: string;
-  size: string;
-  quantity: number;
-  slug: string;
-  image: string;
-  price: number;
-  userImages?: IUserImages[];
-  tempImages?: string[];
-  minIMages?: number;
-  needImages?: boolean;
-  information?: any;
-  added?: [{ complement: string; increment: number }];
-  priceBase?: number;
+      productId: any;
+      productName: string;
+      slug: string;
+      image: string;
+      price: {
+        sizeTitle: string;
+        sizes: Size[];
+        price: number;
+      };
+      optionComposes: [
+        {
+          productComposeId: any;
+          values: Value[];
+          increment: number;
+        },
+      ];
+      quantity: number;
+      total: number;
+    
 }
 
 interface IUserImages {
