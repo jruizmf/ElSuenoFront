@@ -65,11 +65,20 @@ export class AuthService {
     if(typeof localStorage.getItem('user') == 'string'){
       let userString: any = localStorage.getItem('user');
       
-      let userStored = JSON.parse(userString)
+      let userStored = JSON.parse(userString);
+    
       if (typeof userStored.roles[0] != 'undefined') {
-        role = userStored.roles[0];
+        let tempRole: string = userStored.roles[0];
+        userStored.roles.forEach((r:string) => {
+          console.log(r)
+          if(role == 'admin'){
+            tempRole = r;
+          }
+        });
+        role = tempRole;
       };
     }
+    console.log(role)
     return role;
   }
 

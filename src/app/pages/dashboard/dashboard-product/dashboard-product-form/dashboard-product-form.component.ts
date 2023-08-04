@@ -69,8 +69,14 @@ export class DashboardProductFormComponent {
 
           this.product = product.product as IProduct;
           if (product.product.needOptionsCompose) {
-            this.product.composeOptions = product.options[0].composeOptions;
+            this.product.composeOptions  = product.options[0].composeOptions.map((element:any) => {
+          
+              delete element._id;
+              element.composeOption = element.composeOption._id
+              return element;
+            });
           }
+
           this.hasAttributesAdded = true;
           this.form.controls['productName'].patchValue(this.product.productName);
           this.form.controls['description'].patchValue(this.product.description);
@@ -88,7 +94,6 @@ export class DashboardProductFormComponent {
 
   getComposeOptions(): void{
     this._composeOptionService.getAll({}).then((x: any) =>{
-      console.log(x)
       this.composeOptions = x;
     })
   }
@@ -141,12 +146,30 @@ export class DashboardProductFormComponent {
         } else {
           images[i] = this.images[i]
         }
-        
       }
+    } else{
+      images = this.product.images
     }
     if (typeof this.product._id != 'undefined') {
       this.productIdentifier = this.product._id;
     }
+    this.product.attributes = this.product.attributes.map((item:any) => {
+      item.prices = item.prices.map((i:any) => {
+        i.sizes = i.sizes.map((s:any) => {
+          delete s._id
+          return s;
+        })
+        delete i._id
+        return i;
+      })
+      item.salesForOrderPermit = item.salesForOrderPermit.map((i:any) => {
+        delete i._id
+        return i;
+      })
+      delete item._id
+      return item;
+    })
+
     this.product = {
       productName: this.form.value.productName,
       description: this.form.value.description,
@@ -178,7 +201,7 @@ export class DashboardProductFormComponent {
     this.product.composeOptions.push(this.newComposeOption());
   }
   removeComposeOption(i:number) {
-    delete this.product.composeOptions[i];
+    this.product.composeOptions.splice(i,1);
   }
 
   add(event: MatChipInputEvent): void {

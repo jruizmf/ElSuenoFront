@@ -1,0 +1,171 @@
+<div>
+	<!-- User Start -->
+    <form  autocomplete="off">
+        <h3 style="color: #00000070; font-weight: 500;">Edit profile</h3>
+        <div class="flex flex-wrap">
+            <div class="flex space-x-3 bg-primary rounded-md px-5 py-3 w-full sm:w-1/2" style="background-color: rgb(222, 222, 222); ">
+                <div class="w-16 h-16 rounded-full overflow-hidden shadow-md">
+                    <img [src]="user.avatar ? user.avatar : 'assets/images/No_image_available.png'" alt="avatar" class="w-full h-full object-cover">
+                </div>
+                <div class="" style="color: #00000070;">
+                    <h5>{{ user.fullName}}</h5>
+                    <p class="leading-normal ">
+                        <span class="font-medium">Email</span>: {{ user.email }}</p>
+                </div>
+            </div>
+            <div class="w-full sm:w-1/2 sm:pl-5 mt-5 mmd:t-0">
+                <p class="mt-1">
+                    <strong>Member Since</strong>: {{ user.createdAt | date }}</p>
+                    <p class="mt-1">
+                        <strong>Roles</strong>: <span class="px-5" *ngFor="let role of user.roles">
+                            {{ role | titlecase }}
+                        </span></p>
+            </div>
+        </div>
+        <!-- User End -->
+        <!-- User Meta Start -->
+        <div class="border bg-white mt-8 rounded-md">
+            <div class="flex p-4 bg-gray-200">
+                <h6 class="text-normal">Primary Information</h6>
+            </div>
+            <div class="flex flex-wrap p-4">
+                <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                    
+                    <div class="ll-dataset">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Full name:</mat-label>
+                            <input matInput type="fullName" [(ngModel)]="user.fullName" name="fullName" placeholder="Your FullName">
+                            <mat-icon matSuffix>people</mat-icon>
+                            <mat-hint>Input your name</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['telephone'].errors?.['required']">Firstname is required</mat-error>
+                            <mat-error *ngIf="form.controls['telephone'].errors?.['pattern']">Please enter valid telephone</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="ll-dataset mt-4">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Telephone:</mat-label>
+                            <input matInput type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Your Phone number">
+                            <mat-icon matSuffix>telephone</mat-icon>
+                            <mat-hint>Input your telephone</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['lastname'].errors?.['required']">Lastname is required</mat-error>
+                            <mat-error *ngIf="form.controls['lastname'].errors?.['pattern']">Please enter valid lastname</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="ll-dataset mt-4">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Roles:</mat-label>
+                            <mat-select placeholder="Select user role" name="role" [(ngModel)]="user.roles" [(value)]="user.roles" multiple>
+                                <mat-option *ngFor="let role of roles" [value]="role">{{role | titlecase}}</mat-option>
+                            </mat-select>
+                            <mat-icon matSuffix>role</mat-icon>
+                            <mat-hint>Select User Role</mat-hint>
+                            <!-- <mat-error *ngIf="form.controls['lastname'].errors?.['required']">Lastname is required</mat-error>
+                            <mat-error *ngIf="form.controls['lastname'].errors?.['pattern']">Please enter valid lastname</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div class="ll-dataset mt-4">
+                        <div class="p-5" style="text-align: end;">
+                            <button mat-raised-button color="info" type="button"  style="color: rgb(0, 204, 58); border: 1px solid rgb(0, 204, 58); background-color: #FFFFFF;" (click)="openDialog()"><mat-icon>key</mat-icon> Save password</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full sm:w-1/2">
+                    
+                     <div class="ll-dataset">
+                        <app-uploader [images]="[user.avatar]"  (eventEmited)="addImages($event)" ></app-uploader>
+                    </div>
+                    
+                    <!--<div class="ll-dataset mt-4">
+                        <mat-form-field style="width: 80%;">
+                            <mat-label>Telephone:</mat-label>
+                            <input matInput type="telephone" formControlName="telephone" placeholder="Your Telephone">
+                            <mat-icon matSuffix>telephone_outline</mat-icon>
+                            <mat-hint>Input your telephone number</mat-hint>
+                            <mat-error *ngIf="form.controls['email'].errors?.['required']">Telephone is required</mat-error>
+                            <mat-error *ngIf="form.controls['email'].errors?.['pattern']">Please enter valid telephone</mat-error>
+                        </mat-form-field>
+                    </div> -->
+                </div>
+                
+            </div>
+            <div class="px-5">
+                <form >
+                    <h3>Address:</h3>
+                    <div class="flex items-end ml-auto pr-10" style="display: block;
+                    text-align: end;">
+
+                        <button 
+                            (click)="addAddress()"
+                            type="button"
+                            mat-icon-button class="more-button" aria-label="Toggle menu" style="color: #18bc02;"
+                            matTooltip="Add Address"
+                            aria-label="Add Address"
+                        >
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                    <div *ngFor="let item of user.addresses; let i=index" style="border-bottom: 1px solid #f5f5f5;">
+                        <div style=" text-align: end;">
+                            <button (click)="removeAddress(i)" style="color: #bc0202; border: 1px solid transparent;">X</button>
+                        </div>
+                        <h5>Address {{i+1}}</h5>
+                        <div class="flex flex-wrap p-4">
+                            <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">Address Name</mat-label>
+                                    <input matInput [type]="'text'" placeholder="Address Name" name="addressName{{i}}" [(ngModel)]="user.addresses[i].addressName">
+                            
+                                </mat-form-field>
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">First Name</mat-label>
+                                    <input matInput [type]="'text'" placeholder="First Name" name="fistName{{i}}" [(ngModel)]="user.addresses[i].firstName">
+                            
+                                </mat-form-field>
+                            
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">Last Name</mat-label>
+                                    <input matInput [type]="'text'" placeholder="Last Name" name="lastName{{i}}" [(ngModel)]="user.addresses[i].lastName">
+                                </mat-form-field>
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">Telephone</mat-label>
+                                    
+                                    <input matInput [type]="'text'" placeholder="Telephone" name="telephone_{{i}}" [(ngModel)]="user.addresses[i].phone">
+                                </mat-form-field>
+                            </div>
+                            <div class="w-full sm:w-1/2 mt-4 sm:mt-0">
+                            
+                        
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">Address</mat-label>
+                                    <input matInput [type]="'text'" placeholder="Address" name="address_{{i}}" [(ngModel)]="user.addresses[i].address">
+                                </mat-form-field>
+                
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">ZIP Code</mat-label>
+                                    
+                                    <input matInput [type]="'text'" placeholder="ZIP Code" name="zipCode_{{i}}" [(ngModel)]="user.addresses[i].zipCode">
+                                </mat-form-field>
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">City</mat-label>
+                                    
+                                    <input matInput [type]="'text'" placeholder="City" name="zipCode_{{i}}" [(ngModel)]="user.addresses[i].city">
+                                </mat-form-field>
+                                <mat-form-field class="form-element" style="width: 90%;">
+                                    <mat-label for="needOptionsCompose">State</mat-label>
+                                    <input matInput [type]="'text'" placeholder="State" name="state_{{i}}" [(ngModel)]="user.addresses[i].state">
+                                </mat-form-field>
+                            </div>
+                        
+                        </div> 
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- User Meta End -->
+        <!-- User Meta Start -->
+        <div class="p-5" style="text-align: end;">
+            <button mat-raised-button color="info" type="button" style="color: rgb(4, 255, 75); border: 1px solid rgb(4, 255, 75); background-color: #FFFFFF;" (click)="save()">Save changes </button>
+        </div>
+	<!-- User Meta End -->
+    </form>
+</div>

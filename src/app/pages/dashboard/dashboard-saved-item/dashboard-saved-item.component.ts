@@ -18,7 +18,7 @@ export class DashboardSavedItemComponent implements OnInit {
   }
 
   async  getAll(){
-    await this._orderService.getAll({}).then((x: IOrder[]) => {
+    await this._orderService.getUser({}).then((x: IOrder[]) => {
       console.log(x)
       this.orders = x;
     })

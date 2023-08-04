@@ -38,7 +38,7 @@ export class ProductAttributeStepperComponent {
   @Output() emitAttributes = new EventEmitter();
   isLinear = false;
 
-  constructor(private fb: FormBuilder,  public dialogRef: MatDialogRef<DashboardProductFormComponent>,
+  constructor(public dialogRef: MatDialogRef<DashboardProductFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     if (data.isEditing) {
       this.attributes = data.data[0]

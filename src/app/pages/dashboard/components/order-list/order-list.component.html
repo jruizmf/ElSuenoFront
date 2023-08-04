@@ -1,5 +1,4 @@
-<div>
-	<h5 class="mb-3 font-medium">Orders</h5>
+
 	<div class="table-inside">
 		<table class="order-table table-auto ltMd:responsive">
 			<thead>
@@ -55,18 +54,18 @@
 							<mat-icon>more_vert</mat-icon>
 						</button>
 						<mat-menu #menu="matMenu" xposition="before">
-							<button mat-menu-item>
+							<a mat-menu-item [routerLink]="linkTo+order._id">
 								<mat-icon>dialpad</mat-icon>
 								<span>Details</span>
-							</button>
-							<button mat-menu-item>
+							</a>
+							<!-- <button mat-menu-item>
 								<mat-icon>delete</mat-icon>
-								<span>Delete</span>
-							</button>
+								<span>Cancel</span>
+							</button> -->
 						</mat-menu>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-</div>
+

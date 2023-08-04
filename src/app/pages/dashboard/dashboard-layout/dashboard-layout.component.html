@@ -1,13 +1,12 @@
 <div>
-  <mat-sidenav-container class="kl-sidenav-container">
+  <mat-sidenav-container class="kl-sidenav-container ">
     <mat-sidenav #sidenav [opened]="false" [mode]="'over'" [fixedInViewport]="isLessThenLargeDevice">
-      <div class="rounded-md border overflow-hidden w-72">
+      <div class="rounded-md border overflow-hidden px-10 w-72">
         <div class="user text-center bg-primary py-10 px-5">
           <img class="ml-auto mr-auto" src="assets/images/avatar.png" alt="abraham lincoln" />
           <h4 class="text-base mt-3" style="color: #00000070">Abraham Lincoln</h4>
         </div>
         <mat-nav-list class="_sidenav">
-        
           <a
             mat-list-item
             routerLink="/dashboard/profile"
@@ -115,10 +114,11 @@
                       class="font-semibold text-gray-500 hover:text-primary"
                       ><mat-icon  class="mr-2">article</mat-icon><span *ngIf="isExpanded" >My Orders</span></a
                     >
-                    <a (click)="onLogout()" mat-list-item class="font-semibold text-gray-500 hover:text-primary">
+                    <a (click)="onLogout() " mat-list-item class="font-semibold text-gray-500 hover:text-primary">
                       <mat-icon class="mr-2">logout</mat-icon> <span *ngIf="isExpanded">Logout</span></a>
                     <div style="border-bottom: 1px solid #F5F5F5;"></div>
-                    <h6 *ngIf="isExpanded" class="text-center py-3" style="font-weight: 500; color: #00000070;">Admin Panel</h6>
+                    <div *ngIf="role == 'admin' || role == 'super-admin'" class="py-5">
+                      <h6 *ngIf="isExpanded" class="text-center py-3" style="font-weight: 500; color: #00000070;">Admin Panel</h6>
                       <a
                         mat-list-item
                         routerLink="/dashboard"
@@ -138,13 +138,13 @@
                       routerLink="/dashboard/compose-option"
                       routerLinkActive="bg-gray-200"
                       class="font-semibold text-gray-500 hover:text-primary"
-                      ><mat-icon class="mr-2">article</mat-icon> <span *ngIf="isExpanded">Compose Options</span></a>
-                      <a
+                      ><mat-icon class="mr-2">list</mat-icon> <span *ngIf="isExpanded">Compose Options</span></a>
+                      <!-- <a
                       mat-list-item
                       routerLink="/dashboard/inventory"
                       routerLinkActive="bg-gray-200"
                       class="font-semibold text-gray-500 hover:text-primary"
-                      ><mat-icon class="mr-2">list</mat-icon><span *ngIf="isExpanded" >Inventory</span></a>
+                      ><mat-icon class="mr-2">list</mat-icon><span *ngIf="isExpanded" >Inventory</span></a> -->
                       <a
                       mat-list-item
                       routerLink="/dashboard/order"
@@ -163,6 +163,7 @@
                       routerLinkActive="bg-gray-200"
                       class="font-semibold text-gray-500 hover:text-primary"
                       ><mat-icon class="mr-2">store</mat-icon><span *ngIf="isExpanded" >Store Address</span></a>
+                    </div>
                   </mat-nav-list>
 
                   <div class="text-center mt-20">

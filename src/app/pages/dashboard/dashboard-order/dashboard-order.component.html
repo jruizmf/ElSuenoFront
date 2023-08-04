@@ -5,5 +5,5 @@
 		<button [class.text-accent]="view === 'list'" (click)="view = 'list'" mat-icon-button class="view__btn"><mat-icon>list_alt</mat-icon></button>
 			 -->
 	</div>
-	<app-order-list [orders]="orders"></app-order-list>  
+	<app-order-list [linkTo]="'/order/details/'" [orders]="orders"></app-order-list>  
 </div>

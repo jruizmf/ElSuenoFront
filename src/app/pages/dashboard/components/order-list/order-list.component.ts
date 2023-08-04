@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class OrderListComponent {
  @Input() orders: any[] = [];
-
+ @Input() linkTo: string = '';
   constructor() {}
 
   ngOnInit(): void {

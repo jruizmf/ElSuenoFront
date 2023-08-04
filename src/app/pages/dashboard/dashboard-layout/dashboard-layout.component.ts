@@ -12,7 +12,10 @@ export class DashboardLayoutComponent implements OnInit {
   isLessThenLargeDevice: any | undefined;
   isExpanded:boolean = true;
   displayList:boolean = false;
-  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public auth: AuthService) {}
+  role: string;
+  constructor(private breakpointObserver: BreakpointObserver, private router: Router, public auth: AuthService) {
+    this.role = this.auth.getRole();
+  }
 
   ngOnInit(): void {
     this.breakpointObserver.observe(['(max-width: 1199px)']).subscribe(({ matches }) => {

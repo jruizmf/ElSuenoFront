@@ -17,8 +17,6 @@ export class UploaderComponent implements OnInit  {
   }
 
   ngOnInit(){
-    console.log(this.images)
-    console.log( typeof this.images[0])
     if (typeof this.images != 'undefined' && typeof this.images[0] != 'undefined') {
       if (this.images[0] != '') {
         this.files = this.images;

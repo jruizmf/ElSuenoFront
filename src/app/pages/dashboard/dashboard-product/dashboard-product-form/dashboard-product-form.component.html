@@ -43,6 +43,9 @@
                         </div>
                         <form >
                             <div *ngFor="let item of product.composeOptions; let i=index" style="border-bottom: 1px solid #f5f5f5;">
+                                <div class="pr-10" style=" text-align: end;">
+                                    <button (click)="removeComposeOption(i)" style="color: #bc0202; border: 1px solid transparent;"><mat-icon>clear</mat-icon></button>
+                                </div>
                                 <h5>Compose Option {{i+1}}</h5>
                                 <div class="ll-dataset mt-4" >
                                     <div>
@@ -67,13 +70,13 @@
                                         <mat-form-field class="form-element" style="width: 90%;">
                                             <mat-label for="needOptionsCompose">Frequent Increment</mat-label>
                                             
-                                            <input matInput [type]="'text'" placeholder="Frequent Increment" name="frequentIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].composeOption">
+                                            <input matInput [type]="'text'" placeholder="Frequent Increment" name="frequentIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].frequentIncrement">
                                         </mat-form-field>
                                     </div>
                                     <div>
                                         <mat-form-field class="form-element" style="width: 90%;">
                                             <mat-label for="needOptionsCompose">Federal Increment</mat-label>
-                                            <input matInput [type]="'text'" placeholder="Federal Increment" name="federalIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].composeOption">
+                                            <input matInput [type]="'text'" placeholder="Federal Increment" name="federalIncrement_{{i}}" [(ngModel)]="product.composeOptions[i].federalIncrement">
                                         </mat-form-field>
                                     </div>
                                 

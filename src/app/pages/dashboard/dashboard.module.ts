@@ -14,6 +14,7 @@ import { InventoryComponent } from './dashboard-inventory/inventory.component';
 import { UserComponent } from './dashboard-user/user.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { OrderListComponent } from './components/order-list/order-list.component';
+import { DashboardSavedItemFormComponent } from './dashboard-saved-item/dashboard-saved-item-form/dashboard-saved-item-form.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +24,9 @@ import { OrderListComponent } from './components/order-list/order-list.component
     DashboardProfileComponent,
     DashboardOrderComponent,
     InventoryComponent,
-    UserComponent,
     OrderListComponent,
+    DashboardSavedItemFormComponent,
+    
   ],
   imports: [CommonModule, SweetAlert2Module.forChild({ /* options */ }), DashboardRoutingModule, SharedModule, MatMenuModule]
 })

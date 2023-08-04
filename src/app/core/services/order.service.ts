@@ -19,6 +19,12 @@ export class OrderService {
     });
   }
 
+  findByTerm(term: string): any {
+    return this.http.get<any>(`http://localhost:3000/api/admin/orders/${term}` ).toPromise()
+    .then((res: any) => {
+      return res
+    });
+  }
   getUser(filter: any): any {
     return this.http.get<any>(`${ORDER_API}user`,  filter ).toPromise()
     .then((res: any) => {

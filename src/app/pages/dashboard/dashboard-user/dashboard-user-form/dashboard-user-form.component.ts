@@ -1,25 +1,24 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IAddress, IUser } from 'src/app/core/models';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { IUser } from 'src/app/core/models';
 import { FileService } from 'src/app/core/services/file.service';
 import { UserService } from 'src/app/core/services/user.service';
 import Swal from 'sweetalert2';
-import { ProfilePasswordEditorComponent } from '../components/password-editor/password-editor.component';
+import { DashboardUserPasswordEditorComponent } from '../components/password-editor/password-editor.component';
 
 @Component({
-  selector: 'app-profile-form',
-  templateUrl: './profile-form.component.html',
-  styleUrls: ['./profile-form.component.scss']
+  selector: 'app-dashboard-user-form',
+  templateUrl: './dashboard-user-form.component.html',
+  styleUrls: ['./dashboard-user-form.component.scss']
 })
-export class ProfileFormComponent implements OnInit {
+export class DashboardUserFormComponent {
   @ViewChild('fileInput') fileInput: ElementRef | null | undefined = {} as ElementRef;
   form: FormGroup = new FormGroup({});
   flag: boolean = true;
   errors:any[]= [];
-  hasPasswordAdded:boolean = false;
+  roles:any[]= ['admin', 'super-user', 'client', 'federal', 'frequent'];
   user: IUser = {
     fullName: "",
     phoneNumber: "",
@@ -30,11 +29,11 @@ export class ProfileFormComponent implements OnInit {
   fileName: string = "";
   fileAttr = 'Choose File';
   userID: any = "";
-  images: any = []
-  constructor(private _userService: UserService, private dialog: MatDialog, private _uploadService: FileService, private router: Router, private route : ActivatedRoute) { 
+  images: any = [];
+  hasPasswordAdded:boolean = false;
+  constructor(private _userService: UserService, private _uploadService: FileService, private dialog: MatDialog,  private router: Router, private route : ActivatedRoute) { 
     this.userID = this.route.snapshot.paramMap.get('term')
   }
-
 
   getUser(){
     this._userService.findOne(this.userID).then((res:any) => {
@@ -49,6 +48,11 @@ export class ProfileFormComponent implements OnInit {
 
   ngOnInit(): void {
     this._userService.findOne(this.userID).then((res:any) => {
+      
+      if(typeof res.user.name != 'undefined' && res.user.name != ''){
+        this.user.fullName = res.user.name
+        delete res.user.name
+      }
       this.user = res.user;
       if(typeof this.user.banner == 'undefined'){
         this.user.banner = "";
@@ -79,7 +83,6 @@ export class ProfileFormComponent implements OnInit {
   
   addImages(event:any): void{
     this.images = event;
-    console.log(this.images)
   }
   
   getUserForm():IUser{
@@ -99,6 +102,9 @@ export class ProfileFormComponent implements OnInit {
     if (typeof this.user._id != 'undefined') {
       this.userID = this.user._id;
     }
+    // if(typeof this.user.name != 'undefined' && this.user.name != ''){
+    //   delete this.user.name
+    // }
     delete this.user._id;
     delete this.user.createdAt;
     delete this.user.updatedAt;
@@ -110,15 +116,12 @@ export class ProfileFormComponent implements OnInit {
 
     this.user.fullName = this.user.fullName
     this.user.phoneNumber= this.user.phoneNumber
-    console.log(images[0])
+    
     this.user.avatar = images[0]
     for (let i = 0; i < this.user.addresses.length; i++) {
       delete this.user.addresses[i]._id
     }
     this.user.addresses = this.user.addresses
-   
-   
-   
     console.log(this.user)
     return this.user;
   }
@@ -133,10 +136,8 @@ export class ProfileFormComponent implements OnInit {
       city: "",
       state: "",
       phone: ""
-
     }
   }
-  
 
   addAddress(): void {
     if(typeof this.user.addresses != 'undefined')
@@ -144,17 +145,16 @@ export class ProfileFormComponent implements OnInit {
   }
   removeAddress(i:number) {
     if(typeof this.user.addresses != 'undefined')
-      delete this.user.addresses[i];
+      this.user.addresses.splice(i,1);
   }
   save() {
     let user: IUser = this.getUserForm()
-    console.log("Save")
-    console.log(user)
+
     setTimeout(()=>{   
-      this._userService.update(this.userID, user).subscribe( res => {
+      this._userService.update(this.userID, user).subscribe( () => {
         this.form.disable();
-        this.router.navigate(['dashboard/profile']);
-        }, error => {
+        this.router.navigate(['dashboard/user']);
+        }, (error: any) => {
           Swal.fire('Something was wrong..', 'Please contact with technical support!', 'error')
         }
       )
@@ -162,7 +162,7 @@ export class ProfileFormComponent implements OnInit {
    
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(ProfilePasswordEditorComponent, {
+    const dialogRef = this.dialog.open(DashboardUserPasswordEditorComponent, {
       data: {
       }
     });

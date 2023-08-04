@@ -26,12 +26,8 @@ const DashboardChildrenRoute: Routes = [
     loadChildren: () => import('./dashboard-compose-options/dashboard-compose-option.module').then(m => m.DashboardComposeOptionModule)
   },
   {
-    path: 'inventory',
-    component: InventoryComponent
-  },
-  {
     path: 'user',
-    component: UserComponent
+    loadChildren: () => import('./dashboard-user/dashboard-user.module').then(m => m.DashboardUserModule)
   },
   {
     path: 'store-address',
@@ -39,7 +35,7 @@ const DashboardChildrenRoute: Routes = [
   },
   {
     path: 'my-orders',
-    component: DashboardSavedItemComponent
+    loadChildren: () => import('./dashboard-saved-item/dashboard-saved-item.module').then(m => m.DashboardSavedItemModule)
   },
   {
     path: 'profile',
@@ -47,7 +43,7 @@ const DashboardChildrenRoute: Routes = [
   },
   {
     path: 'order',
-    component: DashboardOrderComponent
+    loadChildren: () => import('./dashboard-order/dashboard-order.module').then(m => m.DashboardOrderModule)
   }
 ];
 

@@ -36,8 +36,8 @@
               </a>
             </div>
             <div class="w-2/12">{{user?.email}}</div>
-            <div class="w-2/12 text-center">${{user?.isActive}}</div>
-            <div class="w-2/12 text-center">${{user?.phoneNumber}}</div>
+            <div class="w-2/12 text-center">{{user?.isActive}}</div>
+            <div class="w-2/12 text-center">{{user?.phoneNumber}}</div>
             <div class="w-3/12">
               <div class="flex items-center" *ngFor="let item of user?.roles">
                 
@@ -53,10 +53,10 @@
                   <mat-icon>address</mat-icon>
                   <span>View Addresses</span>
                 </button>
-                <button mat-menu-item>
+                <a mat-menu-item [routerLink]="'edit/'+user._id">
                   <mat-icon>dialpad</mat-icon>
                   <span>Edit</span>
-                </button>
+                </a>
                 <button mat-menu-item>
                   <mat-icon>delete</mat-icon>
                   <span>Delete</span>
